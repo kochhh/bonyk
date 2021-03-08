@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-2xl font-semibold;
+  }
+
+  h2 {
+    @apply text-xl font-semibold;
+  }
+}
+
+@layer components {
+  .form-control {
+    @apply w-full block rounded-md border-gray-300 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition;
+  }
+
+  .btn {
+    @apply inline-block py-2 px-4 font-semibold border border-transparent rounded-md shadow-md focus:outline-none focus:ring transition;
+  }
+
+  .btn-white {
+    @apply bg-white text-black hover:bg-gray-100 focus:ring-gray-300 focus:ring-opacity-50;
+  }
+
+  .btn-blue {
+    @apply bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-400 focus:ring-opacity-50;
+  }
+
+  .btn-green {
+    @apply bg-green-500 text-white hover:bg-green-600 focus:ring-green-400 focus:ring-opacity-50;
+  }
+
+  .btn-red {
+    @apply bg-red-500 text-white hover:bg-red-600 focus:ring-red-400 focus:ring-opacity-50;
+  }
+
+  .btn-indigo {
+    @apply bg-indigo-500 text-white hover:bg-indigo-600 focus:ring-indigo-400 focus:ring-opacity-50;
+  }
+
+  .btn-yellow {
+    @apply bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-yellow-400 focus:ring-opacity-50;
+  }
+
+  .btn-link {
+    @apply p-0 border-0 rounded-none shadow-none;
+  }
+}

@@ -1,0 +1,151 @@
+<template>
+  <tr>
+    <td class="px-3 py-2 whitespace-nowrap">
+      <input
+        type="checkbox"
+        name="items"
+        :id="id"
+        :ref="id"
+        :value="label"
+        class="text-blue-500 transition duration-100 ease-in-out border-gray-300 rounded shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0 disabled:opacity-50 disabled:cursor-not-allowed"
+        :checked="enabled"
+        @change="checkboxHandler"
+        v-if="!editing"
+      >
+    </td>
+    <td class="px-3 py-2">
+      <input type="text" class="form-control py-1" v-model="label" v-if="editing">
+      <span v-else>{{ label }}</span>
+    </td>
+    <td class="px-3 py-2 whitespace-nowrap">
+      <input type="text" class="form-control py-1" v-model="price" v-if="editing">
+      <span v-else>{{ price }}</span>
+    </td>
+    <td class="px-3 py-2 whitespace-nowrap">
+      <div class="flex" v-if="!editing">
+        <button type="button" class="btn btn-green py-2 px-3" @click="editHandler">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+          </svg>
+        </button>
+        <button type="button" class="btn btn-red py-2 px-3 ml-3" @click="deleteHandler">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="flex" v-else>
+        <button type="button" class="btn btn-green py-2 px-3" @click="okHandler">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+          </svg>
+        </button>
+        <button type="button" class="btn btn-red py-2 px-3 ml-3" @click="cancelHandler">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+        </button>
+      </div>
+    </td>
+  </tr>
+</template>
+
+<script>
+export default {
+  props: {
+    category: {
+      type: String,
+      required: true
+    },
+    items: {
+      type: Array,
+      required: true
+    },
+    id: {
+      type: String,
+      required: true
+    },
+    label: {
+      type: String,
+      required: true
+    },
+    price: {
+      type: String,
+      required: true
+    },
+    enabled: {
+      type: Boolean,
+      required: true
+    }
+  },
+  data: () => ({
+    editing: false
+  }),
+  computed: {
+    newLabel: {
+      get() {
+        return this.label
+      },
+      set(value) {
+      }
+    },
+    newPrice: {
+      get() {
+        return this.price
+      },
+      set(value) {
+      }
+    }
+  },
+  methods: {
+    async checkboxHandler() {
+      try {
+        const catId = this.category
+        const id = this.id
+        const enabled = this.$refs[this.id].checked
+
+        await this.$store.dispatch('updateEnabledItems', { id, enabled, catId })
+        this.$toast.success('Список позиций успешно обновлён')
+      } catch(e) {}
+    },
+    editHandler() {
+      this.editing = true
+    },
+    async deleteHandler() {
+      const response = await this.$dialog.confirm({
+        title: 'Удалить позицию?',
+        icon: 'warning',
+        cancelButtonText: 'Отмена'
+      })
+      if (response.isOk) {
+        try {
+          const catId = this.category
+          const id = this.id
+
+          const item = await this.$store.dispatch('deleteItem', { id, catId })
+          this.editing = false
+          this.$toast.success('Позиция удалена')
+          this.$emit('deleted', item)
+        } catch(e) {}
+      }
+    },
+    async okHandler() {
+      // console.log(this.id, this.newLabel, this.newPrice)
+      try {
+        const catId = this.category
+        const id = this.id
+        const label = this.newLabel
+        const price = this.newPrice
+
+        await this.$store.dispatch('updateItem', { id, label, price, catId })
+        this.$toast.success('Позиция успешно обновлена')
+        this.editing = false
+      } catch(e) {}
+    },
+    cancelHandler() {
+      this.editing = false
+    }
+  }
+}
+</script>
