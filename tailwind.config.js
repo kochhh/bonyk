@@ -8,7 +8,7 @@ module.exports = {
       './src/**/*.vue'
     ],
     options: {
-      safelist: ['overflow-auto', 'scrolling-touch', 'w-full', 'h-full', 'z-40', 'bg-opacity-50', 'bg-black', 'z-50', 'w-96', 'px-3', 'py-12', 'flex-shrink-0', 'overflow-visible', 'bg-white']
+      safelist: ['overflow-auto', 'scrolling-touch', 'w-full', 'h-full', 'z-40', 'bg-opacity-50', 'bg-black', 'z-50', 'w-96', 'px-3', 'py-12', 'flex-shrink-0', 'overflow-visible', 'bg-white', 'h-12', 'p-3', 'space-y-4']
     }
   },
   darkMode: false, // or 'media' or 'class'
