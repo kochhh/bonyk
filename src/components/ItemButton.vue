@@ -1,25 +1,55 @@
 <template>
-  <div class="w-40 h-40 bg-gray-100 border border-gray-300 rounded-sm justify-center items-center text-center cursor-pointer ml-1 mb-1">
-    <div class="flex flex-col py-5 px-4 h-full" v-if="!clicked" @click="clickHandler">
-      <div class="w-full mb-4 flex-grow">
-        <span class="text-lg font-semibold">{{ item.label }}</span>
+  <div class="w-40 h-40 ml-1 mb-1">
+    <button
+      type="button"
+      class="w-full h-full btn bg-gray-100 border-gray-300 rounded-sm flex flex-col py-5 shadow-none"
+      @click.prevent="clickHandler"
+    >
+      <div class="w-full flex-grow">
+        <span class="text-lg font-semibold max-w-full overflow-hidden overflow-ellipsis inline-block">
+          {{ item.label }}
+        </span>
       </div>
       <div class="w-full mt-auto">
-        <span class="text-3xl font-semibold">{{ item.price }}</span>
+        <span class="text-3xl font-semibold">
+          {{ item.price }}
+        </span>
       </div>
-    </div>
-    <div class="flex flex-col py-5 px-4 h-full" v-else>
-      <div class="w-full mb-4 flex-grow">
-        <numeric-input v-model="count" :min="1" :max="10" :step="1" />
-      </div>
-      <div class="w-full mt-auto">
-        <button type="button" class="btn btn-green px-3 py-2" @click="okHandler">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
-            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-          </svg>
-        </button>
-      </div>
-    </div>
+    </button>
+    <t-modal-form
+      v-model="showOrderModal"
+      header="Заказ"
+      ref="orderModal"
+      tabindex="-1"
+    >
+      <form @submit.prevent="submitHandler">
+        <div class="py-8 px-4 relative">
+          <numeric-input v-model="count" :min="1" :max="10" :step="1" />
+          <label class="inline-flex items-center space-x-2 absolute right-4 top-1/2 transform -translate-y-1/2">
+            <input
+              type="checkbox"
+              name="by-card"
+              v-model="byCard"
+              class="text-blue-500 transition duration-100 ease-in-out border-gray-300 rounded shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+            <span>На карту</span>
+          </label>
+        </div>
+        <div class="py-3 px-4 rounded-b bg-gray-100 border-t border-gray-200">
+          <div class="flex justify-between items-center">
+            <button
+              type="button"
+              class="btn btn-link"
+              @click="showOrderModal = false"
+            >Отмена</button>
+            <button
+              type="submit"
+              class="btn btn-green"
+            >Добавить</button>
+          </div>
+        </div>
+      </form>
+    </t-modal-form>
   </div>
 </template>
 
@@ -34,8 +64,9 @@ export default {
     }
   },
   data: () => ({
-    clicked: false,
+    showOrderModal: false,
     count: 1,
+    byCard: false,
     date: new Date(),
     interval: null
   }),
@@ -45,19 +76,24 @@ export default {
   methods: {
     clickHandler() {
       if (this.session && Object.keys(this.session).length > 0) {
-        this.clicked = true
+        this.showOrderModal = true
       } else {
         this.$toast.default('Смена не открыта')
       }
     },
-    async okHandler() {
-      const activeSid = this.$store.getters.session.key
-      const { id, label, price } = this.item
-      const count = this.count
-      const time = this.timestamp
-      await this.$store.dispatch('addOrder', { activeSid, id, label, price, count, time })
-      this.clicked = false
-      this.$router.push('/?message=added')
+    async submitHandler() {
+      try {
+        const { id, label, price } = this.item
+        await this.$store.dispatch('addOrder', {
+          activeSid: this.session.id,
+          time: this.timestamp,
+          count: this.count,
+          byCard: this.byCard,
+          id, label, price
+        })
+        this.$refs.orderModal.hide()
+        this.$toast.success('Добавлено')
+      } catch (e) {}
     }
   },
   computed: {

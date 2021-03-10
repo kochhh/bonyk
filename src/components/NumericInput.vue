@@ -2,7 +2,7 @@
   <div class="flex justify-center items-center">
     <input
       type="number"
-      class="form-control w-10 px-2 border-none rounded-none text-center order-2"
+      class="form-control w-16 p-3 border-none rounded-none text-center order-2"
       ref="input"
       :name="name"
       :value="numericValue"
@@ -20,26 +20,26 @@
     <button
       type="button"
       v-if="controls"
-      class="btn btn-blue py-3 px-3 border-none rounded-tr-none rounded-br-none disabled:opacity-50 disabled:cursor-not-allowed order-1"
+      class="btn btn-blue p-3 border-none rounded-tr-none rounded-br-none disabled:opacity-50 disabled:cursor-not-allowed order-1 relative"
       :disabled="disabled || numericValue <= min"
       @mousedown="start(decrement)"
       @touchstart="$event.preventDefault(); start(decrement)"
       @touchend="$event.preventDefault(); stop($event)"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
         <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
       </svg>
     </button>
     <button
       type="button"
       v-if="controls"
-      class="btn btn-blue py-3 px-3 border-none rounded-tl-none rounded-bl-none disabled:opacity-50 disabled:cursor-not-allowed order-3"
+      class="btn btn-blue p-3 border-none rounded-tl-none rounded-bl-none disabled:opacity-50 disabled:cursor-not-allowed order-3"
       :disabled="disabled || numericValue >= max"
       @mousedown="start(increment)"
       @touchstart="$event.preventDefault(); start(increment)"
       @touchend="$event.preventDefault(); stop($event)"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
       </svg>
     </button>

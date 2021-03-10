@@ -3,7 +3,7 @@
     <a
       href="#"
       class="underline text-xs text-blue-500 hover:no-underline"
-      @click.prevent="showCategoryCreate=true"
+      @click.prevent="showCategoryCreate = true"
     >Создать новую</a>
     <t-modal-form
       v-model="showCategoryCreate"
@@ -14,7 +14,7 @@
     >
       <form @submit.prevent="submitHandler">
         <div class="p-4">
-          <div class="flex gap-2">
+          <div class="flex space-x-2">
             <div class="w-40">
               <input
                 type="text"
@@ -45,7 +45,7 @@
             <button
               type="button"
               class="btn btn-link"
-              @click="showCategoryCreate=false"
+              @click="showCategoryCreate = false"
             >Отмена</button>
             <button
               type="submit"
@@ -89,9 +89,9 @@ export default {
         this.name = ''
         this.label = ''
         this.$v.$reset()
-        this.$toast.success('Категория была создана')
         this.$emit('created', category)
         this.$refs.modalCategoryCreate.hide()
+        this.$toast.success('Категория была создана')
       } catch (e) {}
     },
     onOpened() {

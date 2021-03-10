@@ -26,14 +26,16 @@
           </td>
           <td class="px-3 py-2 whitespace-nowrap">
             <router-link :to="{ name: 'Session', params: { id: item.id } }" class="text-blue-500 underline hover:text-blue-700 transition-colors">
-              {{ item.timestart | date('date') }}
+              <span v-if="item.timestart">{{ item.timestart | date('date') }}</span>
+              <span v-else>-</span>
             </router-link>
           </td>
           <td class="px-3 py-2 whitespace-nowrap">
-            {{ item.timestart | date('time') }}
+            <span v-if="item.timestart">{{ item.timestart | date('time') }}</span>
+            <span v-else>-</span>
           </td>
           <td class="px-3 py-2 whitespace-nowrap">
-            {{ item.name }}
+            {{ item.name || '-' }}
           </td>
         </tr>
       </tbody>

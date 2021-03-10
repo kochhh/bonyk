@@ -3,7 +3,7 @@
     <a
       href="#"
       class="underline text-xs text-blue-500 hover:no-underline"
-      @click.prevent="showCategoriesEdit=true"
+      @click.prevent="showCategoriesEdit = true"
     >Изменить набор</a>
     <t-modal-form
       v-model="showCategoriesEdit"
@@ -12,7 +12,7 @@
     >
       <form @submit.prevent="submitHandler">
         <div class="p-4">
-          <ul class="list-none m-0 p-0 flex flex-col gap-1" ref="checkList">
+          <ul class="list-none m-0 p-0 space-y-1" ref="checkList">
             <li v-for="c in categories" :key="c.id">
               <label class="inline-flex items-center space-x-2">
                 <span class="inline-flex">
@@ -36,7 +36,7 @@
             <button
               type="button"
               class="btn btn-link"
-              @click="showCategoriesEdit=false"
+              @click="showCategoriesEdit = false"
             >Отмена</button>
             <button
               type="submit"

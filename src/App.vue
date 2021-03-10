@@ -4,13 +4,13 @@
       <loader />
     </div>
     <div v-else>
-      <app-navbar :session="session" :date="date" :isUserAndSession="isUserAndSession" />
+      <app-navbar :session="session" :date="date" :isSessionActive="isSessionActive" @created="startSession" @finalized="stopSession" />
       <main class="py-20">
         <div class="container mx-auto overflow-y-auto py-4">
           <router-view />
         </div>
       </main>
-      <app-footer :session="session" :date="date" :isUserAndSession="isUserAndSession" />
+      <app-footer :session="session" :date="date" :isSessionActive="isSessionActive" />
     </div>
   </div>
 </template>
@@ -24,7 +24,8 @@ export default {
   data: () => ({
     loading: true,
     date: new Date(),
-    interval: null
+    interval: null,
+    session: {}
   }),
   components: {
     AppNavbar, AppFooter
@@ -36,16 +37,23 @@ export default {
     user() {
       return this.$store.getters.info
     },
-    session() {
-      return this.$store.getters.session || {}
-    },
-    isUserAndSession() {
+    isSessionActive() {
       return this.user && this.session && Object.keys(this.session).length > 0 || false
     }
   },
   watch: {
     error(fbError) {
       this.$toast.error(messages[fbError.code] || 'Что-то пошло не так')
+    }
+  },
+  methods: {
+    startSession(data) {
+      this.session = data
+      console.log(this.session)
+    },
+    stopSession() {
+      this.session = {}
+      console.log(this.session)
     }
   },
   async mounted() {
@@ -55,12 +63,26 @@ export default {
 
     await this.$store.dispatch('fetchInfo')
     if (this.user) {
-      await this.$store.dispatch('fetchActiveSession')
+      await this.$store.dispatch('getActiveSession')
     }
+    this.session = this.$store.getters.session
     this.loading = false
+    console.log(this.session)
   },
   beforeDestroy() {
     clearInterval(this.interval)
   }
 }
 </script>
+
+<style>
+html {
+  font-size: 12px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+</style>

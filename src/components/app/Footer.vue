@@ -5,8 +5,13 @@
         <span class="font-semibold">
           {{ date | date('datetime') }}
         </span>
-        <div v-if="isUserAndSession" class="ml-auto bg-green-500 text-white py-1 px-2 rounded-sm text-xs">
-          Смена открыта: {{ session.timestart | date('datetime') }}
+        <div v-if="isSessionActive" class="ml-auto">
+          <!-- <span class="mr-4 text-xs">
+            {{ session.id }}
+          </span> -->
+          <span class="bg-green-500 text-white py-1 px-2 rounded-sm text-xs">
+            Смена открыта: {{ session.timestart | date('datetime') }}
+          </span>
         </div>
       </div>
     </div>
@@ -25,12 +30,10 @@ export default {
       type: Date,
       required: true
     },
-    isUserAndSession: {
+    isSessionActive: {
       type: Boolean,
       required: true
     }
-  },
-  data: () => ({
-  })
+  }
 }
 </script>

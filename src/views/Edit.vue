@@ -93,12 +93,6 @@ export default {
       return categories.sort((a, b) => a.label.localeCompare(b.label))
     }
   },
-  async mounted() {
-    try {
-      this.categories = await this.$store.dispatch('fetchCategories')
-      this.categoriesLoading = false
-    } catch(e) {}
-  },
   methods: {
     addNewCategory(cat) {
       this.categories.push(cat)
@@ -116,6 +110,12 @@ export default {
         this.itemsLoading = false
       } catch(e) {}
     }
+  },
+  async mounted() {
+    try {
+      this.categories = await this.$store.dispatch('fetchCategories')
+      this.categoriesLoading = false
+    } catch(e) {}
   }
 }
 </script>

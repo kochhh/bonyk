@@ -3,7 +3,7 @@
     <a
       href="#"
       class="underline text-xs text-blue-500 hover:no-underline"
-      @click.prevent="showItemCreate=true"
+      @click.prevent="showItemCreate = true"
     >Создать новую</a>
     <t-modal-form
       v-model="showItemCreate"
@@ -14,7 +14,7 @@
     >
       <form @submit.prevent="submitHandler">
         <div class="p-4">
-          <div class="flex gap-2">
+          <div class="flex space-x-2">
             <div class="flex-grow">
               <input
                 type="text"
@@ -49,7 +49,7 @@
             <button
               type="button"
               class="btn btn-link"
-              @click="showItemCreate=false"
+              @click="showItemCreate = false"
             >Отмена</button>
             <button
               type="submit"

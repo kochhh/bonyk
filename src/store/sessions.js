@@ -19,17 +19,20 @@ export default {
         const name = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val().name
         const key = (await firebase.database().ref(`/sessions/active`).push({ timestart, name })).key
         const info = (await firebase.database().ref(`/sessions/active/${key}`).once('value')).val()
-        commit('setSession', { ...info, key })
+        commit('setSession', { ...info, id: key })
+        return { ...info, id: key }
       } catch (e) {
         commit('setError', e)
         throw e
       }
     },
-    async fetchActiveSession({ commit }) {
+    async getActiveSession({ commit }) {
       try {
-        const sessions = (await firebase.database().ref(`/sessions/active`).once('value')).val() || {}
-        const info = Object.keys(sessions).map(key => ({...sessions[key], id: key}))[0]
-        commit('setSession', info)
+        const sessions = (await firebase.database().ref(`/sessions/active`).once('value')).val()
+        if (sessions) {
+          const info = Object.keys(sessions).map(key => ({...sessions[key], id: key}))[0]
+          commit('setSession', info)
+        }
       } catch (e) {
         commit('setError', e)
         throw e
@@ -46,9 +49,9 @@ export default {
         throw e
       }
     },
-    async addOrder({ commit }, { activeSid, id, label, price, count, time }) {
+    async addOrder({ commit }, { activeSid, id, label, price, count, time, byCard }) {
       try {
-        await firebase.database().ref(`/sessions/active/${activeSid}/orders`).push({ id, label, price, count, time })
+        await firebase.database().ref(`/sessions/active/${activeSid}/orders`).push({ id, label, price, count, time, byCard })
       } catch (e) {
         commit('setError', e)
         throw e
