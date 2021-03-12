@@ -17,15 +17,15 @@
 <script>
 import BaseIcon from '../components/BaseIcon'
 import IconBeer from '../components/icons/IconBeer'
-import IconCocktail from '../components/icons/IconCocktail'
+import IconLong from '../components/icons/IconLong'
+import IconShot from '../components/icons/IconShot'
+import IconStrong from '../components/icons/IconStrong'
 import IconVodka from '../components/icons/IconVodka'
-import IconCognac from '../components/icons/IconCognac'
 import IconTequila from '../components/icons/IconTequila'
 import IconWhiskey from '../components/icons/IconWhiskey'
 import IconWine from '../components/icons/IconWine'
-import IconCoffee from '../components/icons/IconCoffee'
-import IconTea from '../components/icons/IconTea'
-import IconWater from '../components/icons/IconWater'
+import IconHot from '../components/icons/IconHot'
+import IconCold from '../components/icons/IconCold'
 import IconFood from '../components/icons/IconFood'
 
 export default {
@@ -36,7 +36,18 @@ export default {
     }
   },
   components: {
-    BaseIcon, IconBeer, IconCocktail, IconVodka, IconCognac, IconTequila, IconWhiskey, IconWine, IconCoffee, IconTea, IconWater, IconFood
+    BaseIcon,
+    IconBeer,
+    IconLong,
+    IconShot,
+    IconStrong,
+    IconVodka,
+    IconTequila,
+    IconWhiskey,
+    IconWine,
+    IconHot,
+    IconCold,
+    IconFood
   },
 }
 </script>

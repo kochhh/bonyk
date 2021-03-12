@@ -1,33 +1,37 @@
 <template>
   <div class="ml-auto">
-    <a
-      href="#"
-      class="underline text-xs text-blue-500 hover:no-underline"
-      @click.prevent="showCategoriesEdit = true"
-    >Изменить набор</a>
+    <button
+      type="button"
+      class="btn btn-yellow shadow-none py-1 px-3"
+      title="Редактировать"
+      @click="showModal = true"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-toggles" viewBox="0 0 16 16">
+        <path d="M4.5 9a3.5 3.5 0 1 0 0 7h7a3.5 3.5 0 1 0 0-7h-7zm7 6a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm-7-14a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm2.45 0A3.49 3.49 0 0 1 8 3.5 3.49 3.49 0 0 1 6.95 6h4.55a2.5 2.5 0 0 0 0-5H6.95zM4.5 0h7a3.5 3.5 0 1 1 0 7h-7a3.5 3.5 0 1 1 0-7z"/>
+      </svg>
+    </button>
     <t-modal-form
-      v-model="showCategoriesEdit"
-      header="Отметьте нужные категории"
+      v-model="showModal"
+      header="Удалить категории"
       ref="modalCategoriesEdit"
     >
-      <form @submit.prevent="submitHandler">
+      <form>
         <div class="p-4">
-          <ul class="list-none m-0 p-0 space-y-1" ref="checkList">
-            <li v-for="c in categories" :key="c.id">
-              <label class="inline-flex items-center space-x-2">
-                <span class="inline-flex">
-                  <input
-                    type="checkbox"
-                    name="categories"
-                    :id="c.name"
-                    :value="c.name"
-                    :ref="c.name"
-                    class="text-blue-500 transition duration-100 ease-in-out border-gray-300 rounded shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0 disabled:opacity-50 disabled:cursor-not-allowed"
-                    :checked="c.enabled"
-                  >
-                </span>
-                <span>{{ c.label }}</span>
-              </label>
+          <ul class="list-none m-0 p-0 flex flex-wrap justify-center -ml-1 -mt-1">
+            <li v-for="item in categories" :key="item.id" class="ml-1 mt-1 w-24 h-20 flex flex-col items-center text-center bg-gray-100 border border-gray-200 py-2 px-2 text-xs rounded-sm">
+              <span>
+                {{ item.label }}
+              </span>
+              <button
+                type="button"
+                class="btn btn-red py-1 px-1 shadow-none mt-auto"
+                @click="removeHandler(item.id)"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                </svg>
+              </button>
             </li>
           </ul>
         </div>
@@ -36,12 +40,8 @@
             <button
               type="button"
               class="btn btn-link"
-              @click="showCategoriesEdit = false"
+              @click="showModal = false"
             >Отмена</button>
-            <button
-              type="submit"
-              class="btn btn-green"
-            >Сохранить</button>
           </div>
         </div>
       </form>
@@ -59,38 +59,24 @@ export default {
   },
   data() {
     return {
-      showCategoriesEdit: false,
-      checkedCategories: []
-    }
-  },
-  computed: {
-    getCheckedCategories() {
-      const cats = new Array()
-      for (let i = 0; i < this.categories.length; i++) {
-        if (this.$refs[this.categories[i].name].checked) {
-          cats.push({
-            name: this.categories[i].name,
-            label: this.categories[i].label,
-            id: this.categories[i].id,
-          })
-        }
-      }
-      return cats
+      showModal: false
     }
   },
   methods: {
-    async fetchCategories() {
-      return await this.$store.dispatch('fetchCategories')
-    },
-    async submitHandler() {
-      try {
-        // console.log(this.getCheckedCategories)
-        // await this.$store.dispatch('updateCategories', this.checkedCategories)
-        // this.$toast.success('Список категорий успешно изменён')
-        // this.$emit('updated', this.checkedCategories)
-        // this.$refs.modalCategoryCreate.hide()
-      } catch (e) {}
+    async removeHandler(id) {
+      const res = await this.$dialog.confirm({
+        title: 'Удалить категорию?',
+        icon: 'warning',
+        cancelButtonText: 'Отмена'
+      })
+      if (res.isOk) {
+        try {
+          await this.$store.dispatch('removeCategory', id)
+          this.$emit('removed', id)
+          this.$toast.success('Категория удалена')
+        } catch (e) {}
+      }
     }
-  },
+  }
 }
 </script>

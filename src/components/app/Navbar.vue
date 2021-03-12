@@ -95,23 +95,23 @@ export default {
   },
   methods: {
     async logout() {
-      const response = await this.$dialog.confirm({
+      const res = await this.$dialog.confirm({
         title: 'Вы хотите выйти?',
         icon: 'warning',
         cancelButtonText: 'Отмена'
       })
-      if (response.isOk) {
+      if (res.isOk) {
         await this.$store.dispatch('logout')
         this.$router.push('/login')
       }
     },
     async startHandler() {
-      const response = await this.$dialog.confirm({
+      const res = await this.$dialog.confirm({
         title: 'Открыть смену?',
         icon: 'info',
         cancelButtonText: 'Отмена'
       })
-      if (response.isOk) {
+      if (res.isOk) {
         this.loading = true
         const session = await this.$store.dispatch('createSession', this.timestamp)
         this.$emit('created', session)
@@ -120,12 +120,12 @@ export default {
       }
     },
     async stopHandler() {
-      const response = await this.$dialog.confirm({
+      const res = await this.$dialog.confirm({
         title: 'Закрыть смену?',
         icon: 'info',
         cancelButtonText: 'Отмена'
       })
-      if (response.isOk) {
+      if (res.isOk) {
         this.loading = true
         await this.$store.dispatch('finalizeSession', {
           activeSid: this.$store.getters.session.id,

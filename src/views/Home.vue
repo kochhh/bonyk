@@ -3,10 +3,14 @@
     <div v-if="loading" class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <loader />
     </div>
-    <div v-else>
+    <div v-else-if="categories.length">
       <div class="flex flex-wrap justify-center -m-1">
         <category-button v-for="category in categories" :key="category.id" :category="category" />
       </div>
+    </div>
+    <div v-else class="text-center">
+      Здесь пока пусто.<br>
+      <router-link :to="'/edit'" class="link">Добавьте категорию</router-link>
     </div>
   </div>
 </template>
@@ -30,8 +34,8 @@ export default {
     categories: []
   }),
   async mounted() {
-    const categories = await this.$store.dispatch('fetchCategories')
-    this.categories = categories.filter(el => el.items)
+    this.categories = await this.$store.dispatch('fetchCategories')
+    // this.categories = categories.filter(el => el.items)
     this.loading = false
 
     this.$toast.clear()

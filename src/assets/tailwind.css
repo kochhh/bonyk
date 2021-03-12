@@ -48,4 +48,8 @@
   .btn-link {
     @apply p-0 border-0 rounded-none shadow-none;
   }
+
+  .link {
+    @apply text-blue-500 underline hover:text-blue-700 transition-colors;
+  }
 }

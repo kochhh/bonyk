@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="mb-8">История смен</h1>
+    <h1 class="mb-6">История смен</h1>
     <loader v-if="loading" />
     <table class="min-w-full divide-y divide-gray-100 shadow-sm border border-gray-200 mb-8" v-else>
       <thead>
@@ -25,7 +25,7 @@
             {{ index + 1 }}
           </td>
           <td class="px-3 py-2 whitespace-nowrap">
-            <router-link :to="{ name: 'Session', params: { id: item.id } }" class="text-blue-500 underline hover:text-blue-700 transition-colors">
+            <router-link :to="{ name: 'Session', params: { id: item.id } }" class="link">
               <span v-if="item.timestart">{{ item.timestart | date('date') }}</span>
               <span v-else>-</span>
             </router-link>

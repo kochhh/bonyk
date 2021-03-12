@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import auth from './auth'
-import info from './info'
-import categories from './categories'
-import sessions from './sessions'
+
+import auth from './modules/auth'
+import info from './modules/info'
+import categories from './modules/categories'
+import sessions from './modules/sessions'
 
 Vue.use(Vuex)
 

@@ -49,11 +49,9 @@ export default {
   methods: {
     startSession(data) {
       this.session = data
-      console.log(this.session)
     },
     stopSession() {
       this.session = {}
-      console.log(this.session)
     }
   },
   async mounted() {
@@ -67,22 +65,9 @@ export default {
     }
     this.session = this.$store.getters.session
     this.loading = false
-    console.log(this.session)
   },
   beforeDestroy() {
     clearInterval(this.interval)
   }
 }
 </script>
-
-<style>
-html {
-  font-size: 12px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-</style>

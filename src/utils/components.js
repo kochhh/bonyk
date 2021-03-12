@@ -413,7 +413,7 @@ const settings = {
     component: TModal,
     props: {
       fixedClasses: {
-        overlay: 'z-40 overflow-auto scrolling-touch left-0 top-0 bottom-0 right-0 w-full h-full fixed bg-opacity-50',
+        overlay: 'z-40 overflow-auto scrolling-touch left-0 top-0 bottom-0 right-0 w-full h-full fixed bg-opacity-50 focus:outline-none',
         wrapper: 'relative mx-auto z-50 max-w-lg px-3 py-12 h-screen flex flex-col justify-center',
         modal: 'overflow-visible relative rounded',
         body: 'p-4',
@@ -458,7 +458,7 @@ const settings = {
     component: TModal,
     props: {
       fixedClasses: {
-        overlay: 'z-40 overflow-auto scrolling-touch left-0 top-0 bottom-0 right-0 w-full h-full fixed bg-opacity-50',
+        overlay: 'z-40 overflow-auto scrolling-touch left-0 top-0 bottom-0 right-0 w-full h-full fixed bg-opacity-50 focus:outline-none',
         wrapper: 'relative mx-auto z-50 max-w-lg px-3 py-12 h-screen flex flex-col justify-center',
         modal: 'overflow-visible relative rounded',
         body: '',

@@ -7,8 +7,12 @@
       <span>Назад</span>
     </router-link>
     <loader v-if="loading" />
-    <div v-else class="flex flex-wrap justify-center -ml-1">
+    <div v-else-if="items.length" class="flex flex-wrap justify-center -ml-1">
       <item-button v-for="item in items" :key="item.id" :item="item"></item-button>
+    </div>
+    <div v-else class="text-center">
+      Здесь пока пусто.<br>
+      <router-link :to="'/edit'" class="link">Создайте новую позицию</router-link>
     </div>
   </div>
 </template>

@@ -1,6 +1,14 @@
 <template>
   <div>
-    <h1 class="mb-8">Заказы по смене</h1>
+    <div class="list-none m-0 mb-6 p-0 flex text-xs">
+      <router-link :to="'/history'" class="link inline-flex space-x-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+        </svg>
+        <span>История смен</span>
+      </router-link>
+    </div>
+    <h1 class="mb-6">Заказы по смене</h1>
     <loader v-if="loading" />
     <table class="min-w-full divide-y divide-gray-100 shadow-sm border border-gray-200 mb-8" v-else>
       <thead>
