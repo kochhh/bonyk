@@ -2,7 +2,7 @@
   <div>
     <div class="flex items-center mb-4">
       <h2>Выберите категорию</h2>
-      <div class="ml-auto">
+      <div class="ml-auto flex">
         <!-- <div class="ml-3">
           <categories-sort v-if="categories.length > 1" :categories="categories" />
         </div> -->
