@@ -70,7 +70,8 @@ export default {
     async fetchItems({ commit }, catId) {
       try {
         const items = (await firebase.database().ref(`/categories/${catId}/items`).once('value')).val() || {}
-        return Object.keys(items).map(key => ({...items[key], id: key}))
+        const category = (await firebase.database().ref(`/categories/${catId}`).once('value')).val().label || ''
+        return Object.keys(items).map(key => ({...items[key], id: key, category}))
       } catch (e) {
         commit('setError', e)
         throw e

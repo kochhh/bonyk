@@ -49,9 +49,20 @@ export default {
         throw e
       }
     },
-    async addOrder({ commit }, { activeSid, id, label, price, count, time, byCard }) {
+    async resumeSession({ commit }, sid) {
       try {
-        await firebase.database().ref(`/sessions/active/${activeSid}/orders`).push({ id, label, price, count, time, byCard })
+        const session = (await firebase.database().ref(`/sessions/history/${sid}`).once('value')).val() || {}
+        await firebase.database().ref(`/sessions/active`).push(session)
+        await firebase.database().ref(`/sessions/history/${sid}`).remove()
+        commit('setSession')
+      } catch (e) {
+        commit('setError', e)
+        throw e
+      }
+    },
+    async addOrder({ commit }, { activeSid, id, category, label, price, count, time, byCard }) {
+      try {
+        await firebase.database().ref(`/sessions/active/${activeSid}/orders`).push({ id, category, label, price, count, time, byCard })
       } catch (e) {
         commit('setError', e)
         throw e

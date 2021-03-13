@@ -116,7 +116,7 @@ export default {
         const session = await this.$store.dispatch('createSession', this.timestamp)
         this.$emit('created', session)
         this.loading = false
-        this.$toast.success('Вы открыли смену')
+        this.$toast.default('Вы открыли смену')
       }
     },
     async stopHandler() {
@@ -133,7 +133,7 @@ export default {
         })
         this.$emit('finalized')
         this.loading = false
-        this.$toast.success('Вы закрыли смену')
+        this.$toast.default('Вы закрыли смену')
       }
     }
   }

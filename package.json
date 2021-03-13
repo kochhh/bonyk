@@ -11,7 +11,7 @@
     "@tailwindcss/forms": "^0.2.1",
     "bootstrap-icons": "^1.4.0",
     "core-js": "^3.9.1",
-    "firebase": "^8.2.10",
+    "firebase": "^8.3.0",
     "register-service-worker": "^1.7.2",
     "vue": "^2.6.12",
     "vue-meta": "^2.4.0",

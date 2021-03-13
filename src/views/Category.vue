@@ -12,7 +12,9 @@
     </div>
     <div v-else class="text-center">
       Здесь пока пусто.<br>
-      <router-link :to="'/edit'" class="link">Создайте новую позицию</router-link>
+      <router-link :to="'/edit'" class="link">
+        Создайте новую позицию
+      </router-link>
     </div>
   </div>
 </template>

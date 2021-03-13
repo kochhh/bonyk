@@ -14,7 +14,7 @@ const router = new VueRouter({
       meta: {
         layout: 'empty'
       },
-      component: () => import('@/views/Login.vue'),
+      component: () => import('@/views/Login.vue')
     },
     {
       path: '/register',
@@ -22,7 +22,7 @@ const router = new VueRouter({
       meta: {
         layout: 'empty'
       },
-      component: () => import('@/views/Register.vue'),
+      component: () => import('@/views/Register.vue')
     },
     {
       path: '/',
@@ -31,7 +31,7 @@ const router = new VueRouter({
         layout: 'main',
         requiresAuth: true
       },
-      component: () => import('@/views/Home.vue'),
+      component: () => import('@/views/Home.vue')
     },
     {
       path: '/category/:catId',
@@ -41,6 +41,7 @@ const router = new VueRouter({
         requiresAuth: true
       },
       component: () => import('@/views/Category.vue'),
+      props: true
     },
     {
       path: '/edit',
@@ -49,7 +50,7 @@ const router = new VueRouter({
         layout: 'main',
         requiresAuth: true
       },
-      component: () => import('@/views/Edit.vue'),
+      component: () => import('@/views/Edit.vue')
     },
     {
       path: '/history',
@@ -58,7 +59,7 @@ const router = new VueRouter({
         layout: 'main',
         requiresAuth: true
       },
-      component: () => import('@/views/History.vue'),
+      component: () => import('@/views/History.vue')
     },
     {
       path: '/session/:id',
@@ -67,9 +68,9 @@ const router = new VueRouter({
         layout: 'main',
         requiresAuth: true
       },
-      component: () => import('@/views/Session.vue'),
+      component: () => import('@/views/Session.vue')
     }
-  ],
+  ]
 })
 
 router.beforeEach((to, from, next) => {

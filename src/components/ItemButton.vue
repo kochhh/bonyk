@@ -83,14 +83,16 @@ export default {
     },
     async submitHandler() {
       try {
-        const { id, label, price } = this.item
+        const { id, category, label, price } = this.item
         await this.$store.dispatch('addOrder', {
           activeSid: this.session.id,
           time: this.timestamp,
           count: this.count,
           byCard: this.byCard,
-          id, label, price
+          id, category, label, price
         })
+        this.count = 1
+        this.byCard = false
         this.$refs.orderModal.hide()
         this.$toast.success('Добавлено')
       } catch (e) {}

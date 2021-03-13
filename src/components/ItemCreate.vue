@@ -100,12 +100,11 @@ export default {
       try {
         const item = await this.$store.dispatch('createItem', {
           label: this.label,
-          price: this.price,
+          price: +this.price,
           enabled: this.enabled,
           catId: this.category
         })
-        this.label = ''
-        this.price = ''
+        this.label = this.price = ''
         this.$v.$reset()
         this.$toast.success('Позиция была создана')
         this.$emit('created', item)

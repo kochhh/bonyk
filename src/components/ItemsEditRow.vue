@@ -71,7 +71,7 @@ export default {
       required: true
     },
     price: {
-      type: String,
+      type: Number,
       required: true
     },
     enabled: {

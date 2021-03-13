@@ -1,7 +1,7 @@
 <template>
   <router-link
     :to="{ name: 'Category', params: { catId: category.id } }"
-    class="w-40 h-40 p-4 bg-gray-100 border border-gray-300 focus:outline-none focus:ring transition rounded-sm flex flex-col justify-center text-center ml-1 mb-1"
+    class="w-40 h-40 py-2 px-4 bg-gray-100 border border-gray-300 focus:outline-none focus:ring transition rounded-sm flex flex-col justify-center text-center ml-1 mb-1"
   >
     <div class="w-full flex flex-col justify-end items-center h-16 mb-6">
       <base-icon :icon-name="category.name" width="64" height="64" aria-hidden="true" class="max-h-full">
@@ -9,7 +9,9 @@
       </base-icon>
     </div>
     <div class="w-full">
-      <span class="text-lg font-semibold">{{ category.label }}</span>
+      <div class="font-semibold leading-5">
+        {{ category.label }}
+      </div>
     </div>
   </router-link>
 </template>
@@ -27,6 +29,7 @@ import IconWine from '../components/icons/IconWine'
 import IconHot from '../components/icons/IconHot'
 import IconCold from '../components/icons/IconCold'
 import IconFood from '../components/icons/IconFood'
+import IconCustom from '../components/icons/IconCustom'
 
 export default {
   props: {
@@ -47,7 +50,8 @@ export default {
     IconWine,
     IconHot,
     IconCold,
-    IconFood
+    IconFood,
+    IconCustom
   },
 }
 </script>
