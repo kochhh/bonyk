@@ -30,7 +30,7 @@
               <li
                 v-for="item in categories"
                 :key="item.id"
-                class="ml-1 mt-1 w-24 h-20 flex justify-center items-center text-center bg-gray-100 border border-gray-200 py-1 px-2 text-xs rounded-sm cursor-move"
+                class="ml-1 mt-1 w-24 h-20 p-2 flex flex-col justify-center items-center text-center bg-gray-100 border border-gray-200 text-xs rounded-sm cursor-move"
               >
                 {{ item.label }}
               </li>

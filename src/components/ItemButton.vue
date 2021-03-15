@@ -3,14 +3,15 @@
     <button
       type="button"
       class="w-full h-full btn bg-gray-100 border-gray-300 rounded-sm flex flex-col py-5 shadow-none"
+      :class="{ 'justify-center': item.isCustom }"
       @click.prevent="clickHandler"
     >
-      <div class="w-full flex-grow">
+      <div class="w-full" :class="{ 'flex-grow': !item.isCustom }">
         <span class="text-lg font-semibold max-w-full overflow-hidden overflow-ellipsis inline-block">
           {{ item.label }}
         </span>
       </div>
-      <div class="w-full mt-auto">
+      <div class="w-full mt-auto" v-if="!item.isCustom">
         <span class="text-3xl font-semibold">
           {{ item.price }}
         </span>
@@ -18,22 +19,44 @@
     </button>
     <t-modal-form
       v-model="showOrderModal"
-      header="Заказ"
       ref="orderModal"
       tabindex="-1"
     >
-      <form @submit.prevent="submitHandler">
-        <div class="py-8 px-4 relative">
-          <numeric-input v-model="count" :min="1" :max="10" :step="1" />
-          <label class="inline-flex items-center space-x-2 absolute right-4 top-1/2 transform -translate-y-1/2">
+      <template v-slot:header>
+        {{ item.category }}: {{ item.label }}
+      </template>
+      <form @submit.prevent="addHandler">
+        <div class="py-6 px-4">
+          <div class="relative">
+            <numeric-input
+              v-model="count"
+              :min="1"
+              :max="10"
+              :step="1"
+            />
+            <label class="inline-flex items-center space-x-2 absolute right-4 top-1/2 transform -translate-y-1/2">
+              <input
+                type="checkbox"
+                class="checkbox"
+                v-model="byCard"
+              >
+              <span>На карту</span>
+            </label>
+          </div>
+          <div class="mt-6 mx-auto w-40" v-if="item.isCustom">
             <input
-              type="checkbox"
-              name="by-card"
-              v-model="byCard"
-              class="text-blue-500 transition duration-100 ease-in-out border-gray-300 rounded shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0 disabled:opacity-50 disabled:cursor-not-allowed"
+              type="text"
+              v-model="customPrice"
+              class="form-control"
+              placeholder="Цена, ₴"
             >
-            <span>На карту</span>
-          </label>
+            <div class="mt-2 text-red-500 text-xs" v-if="$v.customPrice.$dirty && !$v.customPrice.required">
+              Введите цену
+            </div>
+            <div class="mt-2 text-red-500 text-xs" v-if="$v.customPrice.$dirty && !$v.customPrice.numeric">
+              Введите цену числом
+            </div>
+          </div>
         </div>
         <div class="py-3 px-4 rounded-b bg-gray-100 border-t border-gray-200">
           <div class="flex justify-between items-center">
@@ -55,6 +78,7 @@
 
 <script>
 import NumericInput from '@/components/NumericInput'
+import { required, numeric } from 'vuelidate/lib/validators'
 
 export default {
   props: {
@@ -68,42 +92,65 @@ export default {
     count: 1,
     byCard: false,
     date: new Date(),
-    interval: null
+    interval: null,
+    customPrice: null
   }),
+  validations: {
+    customPrice: { required, numeric }
+  },
   components: {
     NumericInput
   },
+  computed: {
+    session() {
+      return this.$store.getters.session
+    },
+    isSessionActive() {
+      return this.session && Object.keys(this.session).length > 0 || false
+    },
+    timestamp() {
+      return this.date.getTime()
+    }
+  },
   methods: {
     clickHandler() {
-      if (this.session && Object.keys(this.session).length > 0) {
+      if (this.isSessionActive) {
         this.showOrderModal = true
       } else {
         this.$toast.default('Смена не открыта')
       }
     },
-    async submitHandler() {
+    async addHandler() {
+      if (this.item.isCustom && this.$v.$invalid) {
+        this.$v.$touch()
+        return
+      }
+
       try {
-        const { id, category, label, price } = this.item
+        const { id, category, label } = this.item
+        const price = this.item.isCustom ? this.customPrice : this.item.price
         await this.$store.dispatch('addOrder', {
-          activeSid: this.session.id,
-          time: this.timestamp,
+          sid: this.session.id,
+          id,
+          category,
+          label,
+          price,
           count: this.count,
-          byCard: this.byCard,
-          id, category, label, price
+          time: this.timestamp,
+          byCard: this.byCard
         })
         this.count = 1
         this.byCard = false
+        if (this.item.isCustom) {
+          this.customPrice = null
+        }
+        this.$v.$reset()
         this.$refs.orderModal.hide()
         this.$toast.success('Добавлено')
       } catch (e) {}
-    }
-  },
-  computed: {
-    timestamp() {
-      return this.date.getTime()
     },
-    session() {
-      return this.$store.getters.session
+    onBeforeClose() {
+      this.$v.$reset()
     }
   },
   mounted() {

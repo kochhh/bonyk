@@ -3,14 +3,12 @@
     <div class="container mx-auto">
       <div class="flex justify-between items-center h-16">
         <span class="font-semibold">
-          {{ date | date('datetime') }}
+          {{ date | date('datetimesec') }}
         </span>
         <div v-if="isSessionActive" class="ml-auto">
-          <!-- <span class="mr-4 text-xs">
-            {{ session.id }}
-          </span> -->
-          <span class="bg-green-500 text-white py-1 px-2 rounded-sm text-xs">
-            Смена открыта: {{ session.timestart | date('datetime') }}
+          <span class="block bg-green-500 text-white py-1 px-2 rounded-sm text-xs">
+            Started:
+            <span class="font-semibold">{{ session.timestart | date('datetime') }}</span>
           </span>
         </div>
       </div>
@@ -21,19 +19,31 @@
 <script>
 export default {
   name: 'Footer',
-  props: {
-    session: {
-      type: Object,
-      required: true
+  data: () => ({
+    date: new Date(),
+    interval: null
+  }),
+  computed: {
+    user() {
+      return this.$store.getters.info
     },
-    date: {
-      type: Date,
-      required: true
+    session() {
+      return this.$store.getters.session
     },
-    isSessionActive: {
-      type: Boolean,
-      required: true
+    isSessionActive() {
+      return this.user && this.session && Object.keys(this.session).length > 0 || false
+    },
+    timestamp() {
+      return this.date.getTime()
     }
+  },
+  mounted() {
+    this.interval = setInterval(() => {
+      this.date = new Date()
+    }, 1000)
+  },
+  beforeDestroy() {
+    clearInterval(this.interval)
   }
 }
 </script>

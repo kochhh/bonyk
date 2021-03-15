@@ -29,9 +29,9 @@
             </svg>
           </button>
         </div>
-        <div class="flex items-center space-x-6 ml-auto">
+        <div class="flex items-center space-x-4 ml-auto">
           <span class="font-semibold hidden md:block">
-            {{ name }}
+            {{ user.name }}
           </span>
           <button type="button" class="btn btn-red" @click="logout">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
@@ -45,12 +45,12 @@
         </div>
       </nav>
       <nav class="flex justify-center items-center h-16" v-else>
-        <router-link :to="'/register'" class="btn btn-white">
+        <!-- <router-link :to="'/register'" class="btn btn-white">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
             <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
             <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
           </svg>
-        </router-link>
+        </router-link> -->
         <router-link :to="'/login'" class="btn btn-green ml-4">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0v-2z"/>
@@ -65,20 +65,6 @@
 <script>
 export default {
   name: 'Navbar',
-  props: {
-    session: {
-      type: Object,
-      required: true
-    },
-    date: {
-      type: Date,
-      required: true
-    },
-    isSessionActive: {
-      type: Boolean,
-      required: true
-    }
-  },
   data: () => ({
     loading: false
   }),
@@ -86,11 +72,14 @@ export default {
     user() {
       return this.$store.getters.info
     },
-    name() {
-      return this.$store.getters.info.name
+    session() {
+      return this.$store.getters.session
+    },
+    isSessionActive() {
+      return this.user && this.session && Object.keys(this.session).length > 0 || false
     },
     timestamp() {
-      return this.date.getTime()
+      return new Date().getTime()
     }
   },
   methods: {
@@ -113,8 +102,7 @@ export default {
       })
       if (res.isOk) {
         this.loading = true
-        const session = await this.$store.dispatch('createSession', this.timestamp)
-        this.$emit('created', session)
+        await this.$store.dispatch('createSession', this.timestamp)
         this.loading = false
         this.$toast.default('Вы открыли смену')
       }
@@ -128,10 +116,9 @@ export default {
       if (res.isOk) {
         this.loading = true
         await this.$store.dispatch('finalizeSession', {
-          activeSid: this.$store.getters.session.id,
+          sid: this.session.id,
           timeend: this.timestamp
         })
-        this.$emit('finalized')
         this.loading = false
         this.$toast.default('Вы закрыли смену')
       }

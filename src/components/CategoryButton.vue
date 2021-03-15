@@ -1,7 +1,8 @@
 <template>
-  <router-link
-    :to="{ name: 'Category', params: { catId: category.id } }"
+  <button
+    type="button"
     class="w-40 h-40 py-2 px-4 bg-gray-100 border border-gray-300 focus:outline-none focus:ring transition rounded-sm flex flex-col justify-center text-center ml-1 mb-1"
+    @click="$router.push('/category/' + category.id)"
   >
     <div class="w-full flex flex-col justify-end items-center h-16 mb-6">
       <base-icon :icon-name="category.name" width="64" height="64" aria-hidden="true" class="max-h-full">
@@ -13,7 +14,7 @@
         {{ category.label }}
       </div>
     </div>
-  </router-link>
+  </button>
 </template>
 
 <script>
@@ -52,6 +53,6 @@ export default {
     IconCold,
     IconFood,
     IconCustom
-  },
+  }
 }
 </script>

@@ -18,13 +18,17 @@
       <form>
         <div class="p-4">
           <ul class="list-none m-0 p-0 flex flex-wrap justify-center -ml-1 -mt-1">
-            <li v-for="item in categories" :key="item.id" class="ml-1 mt-1 w-24 h-20 flex flex-col items-center text-center bg-gray-100 border border-gray-200 py-2 px-2 text-xs rounded-sm">
+            <li
+              v-for="item in categories"
+              :key="item.id"
+              class="ml-1 mt-1 w-24 h-20 p-2 flex flex-col items-center text-center bg-gray-100 border border-gray-200 text-xs rounded-sm"
+            >
               <span>
                 {{ item.label }}
               </span>
               <button
                 type="button"
-                class="btn btn-red py-1 px-1 shadow-none mt-auto"
+                class="btn btn-red py-1 px-3 shadow-none mt-auto"
                 @click="removeHandler(item.id)"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">

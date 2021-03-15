@@ -4,13 +4,14 @@
       <loader />
     </div>
     <div v-else>
-      <app-navbar :session="session" :date="date" :isSessionActive="isSessionActive" @created="startSession" @finalized="stopSession" />
+      <app-navbar />
       <main class="py-20">
         <div class="container mx-auto overflow-y-auto py-4">
           <router-view />
         </div>
       </main>
-      <app-footer :session="session" :date="date" :isSessionActive="isSessionActive" />
+      <app-footer />
+      <app-moneyflow v-if="isSessionActive" />
     </div>
   </div>
 </template>
@@ -18,17 +19,17 @@
 <script>
 import AppNavbar from '@/components/app/Navbar'
 import AppFooter from '@/components/app/Footer'
+import AppMoneyflow from '@/components/app/Moneyflow'
 import messages from '@/utils/messages'
 
 export default {
   data: () => ({
     loading: true,
     date: new Date(),
-    interval: null,
-    session: {}
+    interval: null
   }),
   components: {
-    AppNavbar, AppFooter
+    AppNavbar, AppFooter, AppMoneyflow
   },
   computed: {
     error() {
@@ -37,6 +38,9 @@ export default {
     user() {
       return this.$store.getters.info
     },
+    session() {
+      return this.$store.getters.session
+    },
     isSessionActive() {
       return this.user && this.session && Object.keys(this.session).length > 0 || false
     }
@@ -44,14 +48,6 @@ export default {
   watch: {
     error(fbError) {
       this.$toast.error(messages[fbError.code] || 'Что-то пошло не так')
-    }
-  },
-  methods: {
-    startSession(data) {
-      this.session = data
-    },
-    stopSession() {
-      this.session = {}
     }
   },
   async mounted() {
@@ -63,7 +59,6 @@ export default {
     if (this.user) {
       await this.$store.dispatch('getActiveSession')
     }
-    this.session = this.$store.getters.session
     this.loading = false
   },
   beforeDestroy() {

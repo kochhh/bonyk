@@ -34,9 +34,13 @@ export default {
     categories: []
   }),
   async mounted() {
-    this.categories = await this.$store.dispatch('fetchCategories')
-    // this.categories = categories.filter(el => el.items)
-    this.loading = false
+    try {
+      this.categories = await this.$store.dispatch('fetchCategories')
+      // this.categories = this.categories.filter(el => el.items)
+      this.loading = false
+    } catch (e) {
+      console.log(e)
+    }
 
     this.$toast.clear()
     if (messages[this.$route.query.message]) {

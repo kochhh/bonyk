@@ -30,37 +30,44 @@
                 :class="{ 'border-red-500': $v.label.$dirty && !$v.label.required }"
                 placeholder="Название, объём"
               >
-              <div
-                class="mt-2 text-red-500 text-xs"
-                v-if="$v.label.$dirty && !$v.label.required"
-              >Введите название позиции</div>
+              <div class="mt-2 text-red-500 text-xs" v-if="$v.label.$dirty && !$v.label.required">
+                Введите название позиции
+              </div>
             </div>
             <div class="w-40">
               <input
                 type="text"
-                v-model.trim="price"
+                v-model.number.trim="price"
                 class="form-control"
-                :class="{ 'border-red-500': $v.price.$dirty && !$v.price.required }"
+                :class="{ 'border-red-500': $v.price.$dirty && !$v.price.required || $v.price.$dirty && !$v.price.numeric }"
                 placeholder="Цена, ₴"
               >
-              <div
-                class="mt-2 text-red-500 text-xs"
-                v-if="$v.price.$dirty && !$v.price.required"
-              >Введите цену позиции</div>
+              <div class="mt-2 text-gray-500 text-xs">
+                Для кастомной позиции укажите 0
+              </div>
+              <div class="mt-2 text-red-500 text-xs" v-if="$v.price.$dirty && !$v.price.required">
+                Введите цену
+              </div>
+              <div class="mt-2 text-red-500 text-xs" v-if="$v.price.$dirty && !$v.price.numeric">
+                Введите цену числом
+              </div>
             </div>
+          </div>
+          <div class="mt-4">
+            <label class="inline-flex items-center space-x-2">
+              <input
+                type="checkbox"
+                class="checkbox"
+                v-model="isCustom"
+              >
+              <span>Кастомная позиция</span>
+            </label>
           </div>
         </div>
         <div class="py-3 px-4 rounded-b bg-gray-100 border-t border-gray-200">
           <div class="flex justify-between items-center">
-            <button
-              type="button"
-              class="btn btn-link"
-              @click="showItemCreate = false"
-            >Отмена</button>
-            <button
-              type="submit"
-              class="btn btn-green"
-            >Добавить</button>
+            <button type="button" class="btn btn-link" @click="showItemCreate = false">Отмена</button>
+            <button type="submit" class="btn btn-green">Добавить</button>
           </div>
         </div>
       </form>
@@ -69,7 +76,7 @@
 </template>
 
 <script>
-import { required } from 'vuelidate/lib/validators'
+import { required, numeric } from 'vuelidate/lib/validators'
 
 export default {
   props: {
@@ -78,17 +85,16 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      showItemCreate: false,
-      label: '',
-      price: '',
-      enabled: true
-    }
-  },
+  data: () => ({
+    showItemCreate: false,
+    label: '',
+    price: null,
+    enabled: true,
+    isCustom: false
+  }),
   validations: {
     label: { required },
-    price: { required }
+    price: { required, numeric }
   },
   methods: {
     async submitHandler() {
@@ -99,18 +105,19 @@ export default {
 
       try {
         const item = await this.$store.dispatch('createItem', {
+          catId: this.category,
           label: this.label,
           price: +this.price,
           enabled: this.enabled,
-          catId: this.category
+          isCustom: this.isCustom
         })
         this.label = this.price = ''
+        this.isCustom = false
         this.$v.$reset()
         this.$toast.success('Позиция была создана')
         this.$emit('created', item)
         this.$refs.modalItemCreate.hide()
-      } catch (e) {
-      }
+      } catch (e) {}
     },
     onOpened() {
       this.$nextTick(() => {

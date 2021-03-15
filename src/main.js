@@ -3,7 +3,7 @@ import VueTailwind from 'vue-tailwind'
 import Vuelidate from 'vuelidate'
 import VueMeta from 'vue-meta'
 import VueToast from 'vue-toast-notification'
-import VueNumericInput from 'vue-numeric-input'
+import Paginate from 'vuejs-paginate'
 
 import App from './App.vue'
 import router from './router'
@@ -28,11 +28,11 @@ Vue.use(VueTailwind, settings)
 Vue.use(Vuelidate)
 Vue.use(VueMeta)
 Vue.use(VueToast)
-Vue.use(VueNumericInput)
 Vue.use(titlePlugin)
 Vue.filter('date', dateFilter)
 Vue.filter('currency', currencyFilter)
 Vue.component('Loader', Loader)
+Vue.component('Paginate', Paginate)
 
 firebase.initializeApp({
   apiKey: "AIzaSyDXQmYKZKHM2RTj5yoR0EsBVdRWe3G5rSE",

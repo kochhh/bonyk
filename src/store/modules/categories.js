@@ -52,16 +52,16 @@ export default {
         throw e
       }
     },
-    async createItem({ commit }, { catId, label, price, enabled }) {
+    async createItem({ commit }, { catId, label, price, enabled, isCustom }) {
       try {
-        const itemData = { label, price, enabled }
+        const itemData = { label, price, enabled, isCustom }
         const item = await firebase.database().ref(`/categories/${catId}`).child('items').push()
         const key = item.key
         const updates = {}
 
         updates[`/items/${key}`] = itemData
         await firebase.database().ref(`/categories/${catId}`).update(updates)
-        return { label, price, enabled, id: key }
+        return { label, price, enabled, isCustom, id: key }
       } catch (e) {
         commit('setError', e)
         throw e

@@ -1,25 +1,25 @@
 <template>
   <tr>
     <td class="px-3 py-2 whitespace-nowrap">
+      <label :for="item.id" class="sr-only">Вкл?</label>
       <input
         type="checkbox"
         name="items"
-        :id="id"
-        :ref="id"
-        :value="label"
-        class="text-blue-500 transition duration-100 ease-in-out border-gray-300 rounded shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0 disabled:opacity-50 disabled:cursor-not-allowed"
-        :checked="enabled"
+        class="checkbox -mt-0.5"
+        :id="item.id"
+        :ref="item.id"
+        :checked="item.enabled"
         @change="checkboxHandler"
         v-if="!editing"
       >
     </td>
     <td class="px-3 py-2">
-      <input type="text" class="form-control py-1" v-model="label" v-if="editing">
-      <span v-else>{{ label }}</span>
+      <input type="text" class="form-control py-1" v-model="item.label" v-if="editing">
+      <span v-else>{{ item.label }}</span>
     </td>
     <td class="px-3 py-2 whitespace-nowrap">
-      <input type="text" class="form-control py-1" v-model="price" v-if="editing">
-      <span v-else>{{ price }}</span>
+      <input type="text" class="form-control py-1" v-model.number="item.price" v-if="editing">
+      <span v-else>{{ item.price }}</span>
     </td>
     <td class="px-3 py-2 whitespace-nowrap">
       <div class="flex" v-if="!editing">
@@ -36,7 +36,7 @@
         </button>
       </div>
       <div class="flex" v-else>
-        <button type="button" class="btn btn-green py-2 px-3 shadow-none" @click="okHandler">
+        <button type="submit" class="btn btn-green py-2 px-3 shadow-none" @click="okHandler">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
             <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
           </svg>
@@ -58,52 +58,20 @@ export default {
       type: String,
       required: true
     },
-    items: {
-      type: Array,
-      required: true
-    },
-    id: {
-      type: String,
-      required: true
-    },
-    label: {
-      type: String,
-      required: true
-    },
-    price: {
-      type: Number,
-      required: true
-    },
-    enabled: {
-      type: Boolean,
+    item: {
+      type: Object,
       required: true
     }
   },
   data: () => ({
     editing: false
   }),
-  computed: {
-    newLabel: {
-      get() {
-        return this.label
-      },
-      set(value) {
-      }
-    },
-    newPrice: {
-      get() {
-        return this.price
-      },
-      set(value) {
-      }
-    }
-  },
   methods: {
     async checkboxHandler() {
       try {
         await this.$store.dispatch('updateEnabledItems', {
-          id: this.id,
-          enabled: this.$refs[this.id].checked,
+          id: this.item.id,
+          enabled: this.$refs[this.item.id].checked,
           catId: this.category
         })
         this.$toast.success('Список позиций успешно обновлён')
@@ -120,12 +88,11 @@ export default {
       })
       if (res.isOk) {
         try {
-          const id = this.id
           await this.$store.dispatch('removeItem', {
-            id,
+            id: this.item.id,
             catId: this.category
           })
-          this.$emit('removed', id)
+          this.$emit('removed', this.item.id)
           this.editing = false
           this.$toast.success('Позиция удалена')
         } catch(e) {}
@@ -134,9 +101,9 @@ export default {
     async okHandler() {
       try {
         await this.$store.dispatch('updateItem', {
-          id: this.id,
-          label: this.newLabel,
-          price: this.newPrice,
+          id: this.item.id,
+          label: this.item.label,
+          price: this.item.price,
           catId: this.category
         })
         this.$toast.success('Позиция успешно обновлена')

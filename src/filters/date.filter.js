@@ -10,6 +10,9 @@ export default function dateFilter(value, format = 'date') {
   if (format.includes('time')) {
     options.hour = '2-digit'
     options.minute = '2-digit'
+  }
+
+  if (format.includes('sec')) {
     options.second = '2-digit'
   }
 

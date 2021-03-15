@@ -40,8 +40,7 @@ const router = new VueRouter({
         layout: 'main',
         requiresAuth: true
       },
-      component: () => import('@/views/Category.vue'),
-      props: true
+      component: () => import('@/views/Category.vue')
     },
     {
       path: '/edit',
