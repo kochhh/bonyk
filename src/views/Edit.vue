@@ -15,7 +15,9 @@
       </div>
     </div>
     <div class="mb-8">
-      <loader v-if="categoriesLoading" />
+      <div v-if="categoriesLoading" class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <app-loader />
+      </div>
       <select v-else class="form-control" v-model="category" @change="selectHandler">
         <option :value="null" selected disabled>Выберите...</option>
         <option v-for="item in categories" :key="item.id" :value="item.id">
@@ -30,7 +32,9 @@
           <item-create :category="category" @created="addNewItem" />
         </div>
       </div>
-      <loader v-if="itemsLoading" />
+      <div v-if="itemsLoading" class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <app-loader />
+      </div>
       <table v-else-if="items.length" class="min-w-full divide-y divide-gray-100 shadow-sm border border-gray-200 mb-8">
         <thead>
           <tr>

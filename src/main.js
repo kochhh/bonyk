@@ -8,7 +8,7 @@ import Paginate from 'vuejs-paginate'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import Loader from './components/app/Loader'
+import AppLoader from './components/app/Loader'
 import dateFilter from './filters/date.filter'
 import currencyFilter from './filters/currency.filter'
 import settings from './utils/components'
@@ -21,6 +21,7 @@ import 'firebase/database'
 
 import './assets/tailwind.css'
 import 'vue-toast-notification/dist/theme-sugar.css'
+import './assets/styles.css'
 
 Vue.config.productionTip = false
 
@@ -31,7 +32,7 @@ Vue.use(VueToast)
 Vue.use(titlePlugin)
 Vue.filter('date', dateFilter)
 Vue.filter('currency', currencyFilter)
-Vue.component('Loader', Loader)
+Vue.component('AppLoader', AppLoader)
 Vue.component('Paginate', Paginate)
 
 firebase.initializeApp({

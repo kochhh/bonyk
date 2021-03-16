@@ -1,20 +1,18 @@
 <template>
-  <div class="w-40 h-40 ml-1 mb-1">
+  <div class="w-28 h-28 md:w-40 md:h-40 ml-0.5 md:ml-1 mb-0.5 md:mb-1">
     <button
       type="button"
-      class="w-full h-full btn bg-gray-100 border-gray-300 rounded-sm flex flex-col py-5 shadow-none"
+      class="w-full h-full py-4 md:py-5 px-2 md:px-4 btn bg-gray-100 border-gray-300 rounded-sm shadow-none flex flex-col"
       :class="{ 'justify-center': item.isCustom }"
       @click.prevent="clickHandler"
     >
-      <div class="w-full" :class="{ 'flex-grow': !item.isCustom }">
-        <span class="text-lg font-semibold max-w-full overflow-hidden overflow-ellipsis inline-block">
+      <div class="w-full text-sm md:text-lg font-semibold" :class="{ 'flex-grow': !item.isCustom }">
+        <div class="max-w-full overflow-hidden overflow-ellipsis">
           {{ item.label }}
-        </span>
+        </div>
       </div>
-      <div class="w-full mt-auto" v-if="!item.isCustom">
-        <span class="text-3xl font-semibold">
-          {{ item.price }}
-        </span>
+      <div class="w-full mt-auto text-2xl md:text-3xl font-semibold leading-5" v-if="!item.isCustom">
+        {{ item.price }}
       </div>
     </button>
     <t-modal-form
@@ -26,7 +24,7 @@
         {{ item.category }}: {{ item.label }}
       </template>
       <form @submit.prevent="addHandler">
-        <div class="py-6 px-4">
+        <div class="py-8 px-4">
           <div class="relative">
             <numeric-input
               v-model="count"
@@ -34,7 +32,7 @@
               :max="10"
               :step="1"
             />
-            <label class="inline-flex items-center space-x-2 absolute right-4 top-1/2 transform -translate-y-1/2">
+            <label class="flex justify-center items-center space-x-2 mt-4 sm:mt-0 sm:absolute sm:right-0 sm:top-1/2 sm:transform sm:-translate-y-1/2">
               <input
                 type="checkbox"
                 class="checkbox"
@@ -43,11 +41,11 @@
               <span>На карту</span>
             </label>
           </div>
-          <div class="mt-6 mx-auto w-40" v-if="item.isCustom">
+          <div class="mt-8 mx-auto w-32" v-if="item.isCustom">
             <input
               type="text"
               v-model="customPrice"
-              class="form-control"
+              class="form-control text-center text-xl font-semibold placeholder-gray-400"
               placeholder="Цена, ₴"
             >
             <div class="mt-2 text-red-500 text-xs" v-if="$v.customPrice.$dirty && !$v.customPrice.required">
@@ -68,6 +66,8 @@
             <button
               type="submit"
               class="btn btn-green"
+              :disabled="loading"
+              :class="{ 'disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-500': loading }"
             >Добавить</button>
           </div>
         </div>
@@ -88,6 +88,7 @@ export default {
     }
   },
   data: () => ({
+    loading: false,
     showOrderModal: false,
     count: 1,
     byCard: false,
@@ -102,11 +103,11 @@ export default {
     NumericInput
   },
   computed: {
+    isSession() {
+      return Object.keys(this.$store.getters.session).length > 0
+    },
     session() {
       return this.$store.getters.session
-    },
-    isSessionActive() {
-      return this.session && Object.keys(this.session).length > 0 || false
     },
     timestamp() {
       return this.date.getTime()
@@ -114,7 +115,7 @@ export default {
   },
   methods: {
     clickHandler() {
-      if (this.isSessionActive) {
+      if (this.isSession) {
         this.showOrderModal = true
       } else {
         this.$toast.default('Смена не открыта')
@@ -127,6 +128,7 @@ export default {
       }
 
       try {
+        this.loading = true
         const { id, category, label } = this.item
         const price = this.item.isCustom ? this.customPrice : this.item.price
         await this.$store.dispatch('addOrder', {
@@ -139,6 +141,7 @@ export default {
           time: this.timestamp,
           byCard: this.byCard
         })
+        this.loading = false
         this.count = 1
         this.byCard = false
         if (this.item.isCustom) {

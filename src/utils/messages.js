@@ -1,8 +1,8 @@
 export default {
+  'PERMISSION_DENIED': 'Нет доступа',
   'login': 'Вы успешно авторизовались',
   'logout': 'Вы вышли из системы',
   'nologin': 'Сперва авторизуйтесь',
-  'PERMISSION_DENIED': 'Недостаточно прав',
   'auth/user-not-found': 'Пользователя с таким e-mail не существует',
   'auth/wrong-password': 'Неверный пароль',
   'auth/email-already-in-use': 'Такой e-mail уже занят',

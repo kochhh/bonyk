@@ -1,0 +1,27 @@
+.v-toast__item {
+  min-height: auto;
+}
+
+.v-toast__item .v-toast__text {
+  padding: 1em;
+}
+
+.v-toast__item--success {
+  @apply bg-green-500;
+}
+
+.v-toast__item--info {
+  @apply bg-blue-500;
+}
+
+.v-toast__item--warning {
+  @apply bg-yellow-500;
+}
+
+.v-toast__item--error {
+  @apply bg-red-500;
+}
+
+.v-toast__item--default {
+  @apply bg-gray-700;
+}

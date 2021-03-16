@@ -11,24 +11,17 @@ const router = new VueRouter({
     {
       path: '/login',
       name: 'Login',
-      meta: {
-        layout: 'empty'
-      },
       component: () => import('@/views/Login.vue')
     },
     {
       path: '/register',
       name: 'Register',
-      meta: {
-        layout: 'empty'
-      },
       component: () => import('@/views/Register.vue')
     },
     {
       path: '/',
       name: 'Home',
       meta: {
-        layout: 'main',
         requiresAuth: true
       },
       component: () => import('@/views/Home.vue')
@@ -37,7 +30,6 @@ const router = new VueRouter({
       path: '/category/:catId',
       name: 'Category',
       meta: {
-        layout: 'main',
         requiresAuth: true
       },
       component: () => import('@/views/Category.vue')
@@ -46,7 +38,6 @@ const router = new VueRouter({
       path: '/edit',
       name: 'Edit',
       meta: {
-        layout: 'main',
         requiresAuth: true
       },
       component: () => import('@/views/Edit.vue')
@@ -55,16 +46,14 @@ const router = new VueRouter({
       path: '/history',
       name: 'History',
       meta: {
-        layout: 'main',
         requiresAuth: true
       },
       component: () => import('@/views/History.vue')
     },
     {
-      path: '/session/:id',
+      path: '/history/:id',
       name: 'Session',
       meta: {
-        layout: 'main',
         requiresAuth: true
       },
       component: () => import('@/views/Session.vue')
@@ -74,9 +63,9 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const loggedIn = firebase.auth().currentUser
-  const requireAuth = to.matched.some(record => record.meta.requiresAuth)
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
 
-  if (!loggedIn && requireAuth) {
+  if (!loggedIn && requiresAuth) {
     next('/login?message=nologin')
   } else {
     next()

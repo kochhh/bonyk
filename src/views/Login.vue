@@ -65,9 +65,7 @@ export default {
   },
   data: () => ({
     email: '',
-    password: '',
-    time: new Date(),
-    interval: null
+    password: ''
   }),
   validations: {
     email: { email, required },
@@ -83,25 +81,16 @@ export default {
       try {
         await this.$store.dispatch('login', {
           email: this.email,
-          password: this.password,
-          timestart: this.time
+          password: this.password
         })
         this.$router.push('/')
       } catch(e) {}
     }
   },
   mounted() {
-    this.interval = setInterval(() => {
-      this.time = new Date().getTime()
-    }, 1000)
-
-    this.$toast.clear()
     if (messages[this.$route.query.message]) {
       this.$toast.default(messages[this.$route.query.message])
     }
-  },
-  beforeDestroy() {
-    clearInterval(this.interval)
   }
 }
 </script>

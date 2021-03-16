@@ -6,7 +6,7 @@
       title="Создать новую"
       @click="showItemCreate = true"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
         <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z"/>
         <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
       </svg>
@@ -66,8 +66,17 @@
         </div>
         <div class="py-3 px-4 rounded-b bg-gray-100 border-t border-gray-200">
           <div class="flex justify-between items-center">
-            <button type="button" class="btn btn-link" @click="showItemCreate = false">Отмена</button>
-            <button type="submit" class="btn btn-green">Добавить</button>
+            <button
+              type="button"
+              class="btn btn-link"
+              @click="showItemCreate = false"
+            >Отмена</button>
+            <button
+              type="submit"
+              class="btn btn-green"
+              :disabled="loading"
+              :class="{ 'disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-500': loading }"
+            >Добавить</button>
           </div>
         </div>
       </form>
@@ -86,6 +95,7 @@ export default {
     }
   },
   data: () => ({
+    loading: false,
     showItemCreate: false,
     label: '',
     price: null,
@@ -104,6 +114,7 @@ export default {
       }
 
       try {
+        this.loading = true
         const item = await this.$store.dispatch('createItem', {
           catId: this.category,
           label: this.label,
@@ -111,6 +122,7 @@ export default {
           enabled: this.enabled,
           isCustom: this.isCustom
         })
+        this.loading = false
         this.label = this.price = ''
         this.isCustom = false
         this.$v.$reset()

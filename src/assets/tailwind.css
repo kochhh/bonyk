@@ -54,6 +54,6 @@
   }
 
   .checkbox {
-    @apply border border-gray-400 rounded shadow-sm focus:border-blue-500 focus:outline-none focus:ring focus:ring-offset-0 focus:ring-blue-400 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed transition;
+    @apply border border-gray-300 rounded shadow-sm focus:border-blue-500 focus:outline-none focus:ring focus:ring-offset-0 focus:ring-blue-400 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed transition;
   }
 }
