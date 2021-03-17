@@ -4,7 +4,7 @@
     <div v-if="loading" class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <app-loader />
     </div>
-    <div v-else-if="!sessions.length">
+    <div v-else-if="!sessions">
       Здесь пока пусто.
     </div>
     <div v-else>
@@ -20,11 +20,11 @@
             <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-48">
               Закрыта
             </th>
-            <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b">
+            <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-28">
               Открыл
             </th>
-            <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-32">
-              Продолжить
+            <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b">
+              Действия
             </th>
           </tr>
         </thead>

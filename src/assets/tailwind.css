@@ -45,6 +45,10 @@
     @apply bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-yellow-400 focus:ring-opacity-50;
   }
 
+  .btn-pink {
+    @apply bg-pink-500 text-white hover:bg-pink-600 focus:ring-pink-400 focus:ring-opacity-50;
+  }
+
   .btn-link {
     @apply p-0 border-0 rounded-none shadow-none;
   }

@@ -1,19 +1,11 @@
 <template>
   <div>
-    <div class="list-none m-0 mb-6 p-0 flex text-xs">
-      <router-link :to="'/history'" class="link inline-flex space-x-2">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-        </svg>
-        <span>История смен</span>
-      </router-link>
-    </div>
-    <h1 class="mb-6">Заказы по смене</h1>
+    <h1 class="mb-6">Рабочая смена</h1>
     <div v-if="loading" class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <app-loader />
     </div>
-    <div v-else-if="!items">
-      Заказов в данной смене не было.
+    <div v-else-if="!items.length">
+      Заказов пока не было.
     </div>
     <div v-else>
       <session-table :items="items" :total-items="totalItems" />
@@ -34,10 +26,10 @@ import paginationMixin from '@/mixins/pagination.mixin'
 import SessionTable from '@/components/SessionTable'
 
 export default {
-  name: 'Session',
+  name: 'Active',
   metaInfo() {
     return {
-      title: this.$title('Заказы по смене')
+      title: this.$title('Рабочая смена')
     }
   },
   components: {
@@ -54,7 +46,8 @@ export default {
   async mounted() {
     this.loading = true
     this.items = (await this.$store.dispatch('fetchOrders', {
-        id: this.$route.params.id
+        id: this.$store.getters.session.id,
+        isActive: true
       }))
       .map((el, index) => ({
         ...el,

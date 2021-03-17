@@ -6,7 +6,7 @@
         :class="{ 'justify-center': !isSession, 'justify-between': isSession }"
       >
         <div class="font-semibold text-sm">
-          <span class="hidden md:inline">
+          <span :class="{ 'hidden md:inline': isSession }">
             {{ date | date('date') }}
           </span>
           <span>

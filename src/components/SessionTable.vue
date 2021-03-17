@@ -5,9 +5,6 @@
         <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b align-top w-10">
           №
         </th>
-        <!-- <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b align-top w-16">
-          Категория
-        </th> -->
         <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b align-top">
           Позиция
         </th>
@@ -27,11 +24,6 @@
         <td class="px-3 py-2 whitespace-nowrap align-top" :class="{ 'bg-yellow-50': item.byCard }">
           {{ item.number }}
         </td>
-        <!-- <td class="px-3 py-2 align-top" :class="{ 'bg-yellow-50': item.byCard }">
-          <div class="w-16 overflow-ellipsis whitespace-nowrap overflow-hidden">
-            {{ item.category || '-' }}
-          </div>
-        </td> -->
         <td class="px-3 py-2 align-top" :class="{ 'bg-yellow-50': item.byCard }">
           {{ item.label }}
         </td>
@@ -51,18 +43,16 @@
         <td class="px-3 py-2 text-right bg-gray-100 border-t" colspan="5">
           <div class="mb-2 pb-2 border-b border-gray-200 flex justify-end">
             <span class="py-1 px-2 bg-white">
-              Cash: <span class="font-bold ml-1">{{ this.totalCash }} ₴</span>
+              Cash: <span class="font-bold ml-1">{{ totalCash }} ₴</span>
             </span>
             <span class="py-1 px-2 bg-yellow-50 ml-2">
-              Card: <span class="font-bold ml-1">{{ this.totalCard }} ₴</span>
+              Card: <span class="font-bold ml-1">{{ totalCard }} ₴</span>
             </span>
           </div>
           <div>
-            Итого: <span class="text-lg font-bold ml-1">{{ this.total }} ₴</span>
+            Итого: <span class="text-lg font-bold ml-1">{{ total }} ₴</span>
           </div>
         </td>
-        <!-- <td class="px-3 py-3 bg-gray-100 border-t">
-        </td> -->
       </tr>
     </tfoot>
   </table>

@@ -57,7 +57,15 @@ const router = new VueRouter({
         requiresAuth: true
       },
       component: () => import('@/views/Session.vue')
-    }
+    },
+    {
+      path: '/active',
+      name: 'Active',
+      meta: {
+        requiresAuth: true
+      },
+      component: () => import('@/views/Active.vue')
+    },
   ]
 })
 

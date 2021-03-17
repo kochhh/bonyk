@@ -86,15 +86,16 @@ export default {
         throw e
       }
     },
-    async fetchOrders({ commit }, id) {
+    async fetchOrders({ commit }, { id, isActive = false }) {
       try {
-        const orders = (await firebase.database().ref(`/sessions/history/${id}/orders`).once('value')).val() || {}
+        const where = isActive ? 'active' : 'history'
+        const orders = (await firebase.database().ref(`/sessions/${where}/${id}/orders`).once('value')).val() || {}
         return Object.keys(orders).map(key => ({...orders[key], id: key}))
       } catch (e) {
         commit('setError', e)
         throw e
       }
-    },
+    }
   },
   getters: {
     session: s => s.session,
