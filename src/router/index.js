@@ -51,7 +51,7 @@ const router = new VueRouter({
       component: () => import('@/views/History.vue')
     },
     {
-      path: '/history/:id',
+      path: '/history/:id/:timestart',
       name: 'Session',
       meta: {
         requiresAuth: true
