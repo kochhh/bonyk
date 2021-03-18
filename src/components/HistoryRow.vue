@@ -64,6 +64,9 @@ export default {
         this.loading = true
         await this.$store.dispatch('resumeSession', this.item.id)
         this.loading = false
+        if (this.$route.name !== 'Home') {
+          this.$router.push('/')
+        }
         this.$toast.default('Вы возобновили смену')
       }
     }

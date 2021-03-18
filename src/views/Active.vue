@@ -4,7 +4,7 @@
     <div v-if="loading" class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <app-loader />
     </div>
-    <div v-else-if="!items.length">
+    <div v-else-if="!items">
       Заказов пока не было.
     </div>
     <div v-else>

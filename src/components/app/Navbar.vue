@@ -117,6 +117,9 @@ export default {
         this.loading = true
         await this.$store.dispatch('createSession', this.timestamp)
         this.loading = false
+        if (this.$route.name !== 'Home') {
+          this.$router.push('/')
+        }
         this.$toast.default('Вы открыли смену')
       }
     },
@@ -133,6 +136,9 @@ export default {
           timeend: this.timestamp
         })
         this.loading = false
+        if (this.$route.name !== 'Home') {
+          this.$router.push('/')
+        }
         this.$toast.default('Вы закрыли смену')
       }
     }
