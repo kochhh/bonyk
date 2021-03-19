@@ -19,15 +19,16 @@
         <button
           type="button"
           class="btn btn-green py-1 px-2 shadow-none"
-          :class="{ 'disabled:opacity-50 disabled:cursor-not-allowed': loading }"
-          :disabled="loading"
-          v-if="isSessionResumable && !isSession"
+          :class="{ 'disabled:opacity-50 disabled:cursor-not-allowed': isSession }"
+          :disabled="isSession"
+          v-if="isSessionResumable"
           @click="resumeHandler"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16">
+          <svg xmlns="http://www.w3.org/2000/svg" width=".625rem" height=".625rem" fill="currentColor" viewBox="0 0 16 16">
             <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
           </svg>
         </button>
+        <app-loader v-if="loading" />
       </div>
     </td>
   </tr>

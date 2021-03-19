@@ -11,16 +11,15 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     screens: {
-      'sm': '640px',
+      'sm': '576px',
       'md': '768px',
-      'lg': '1024px'
+      'lg': '992px'
     },
     container: {
       center: true,
       padding: {
         DEFAULT: '1rem',
-        sm: '2rem',
-        lg: '2rem'
+        sm: '2rem'
       }
     }
   },

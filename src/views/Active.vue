@@ -6,7 +6,9 @@
       Заказов пока не было.
     </div>
     <div v-else>
-      <session-table :items="items" :total-items="totalItems" />
+      <div class="w-full overflow-x-auto">
+        <session-table :items="items" :total-items="totalItems" />
+      </div>
       <t-pagination
         v-if="pageCount > pageSize"
         v-model="page"

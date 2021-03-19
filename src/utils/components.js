@@ -414,7 +414,7 @@ const settings = {
     props: {
       fixedClasses: {
         overlay: 'z-40 overflow-auto scrolling-touch left-0 top-0 bottom-0 right-0 w-full h-full fixed bg-opacity-50 focus:outline-none',
-        wrapper: 'relative mx-auto z-50 max-w-lg px-3 py-12 flex flex-col justify-center',
+        wrapper: 'relative mx-auto z-50 max-w-lg min-h-full px-3 py-12 flex flex-col justify-center',
         modal: 'overflow-visible relative rounded',
         body: 'p-4',
         header: 'py-3 px-4 border-b rounded-t',
@@ -459,7 +459,7 @@ const settings = {
     props: {
       fixedClasses: {
         overlay: 'z-40 overflow-auto scrolling-touch left-0 top-0 bottom-0 right-0 w-full h-full fixed bg-opacity-50 focus:outline-none',
-        wrapper: 'relative mx-auto z-50 max-w-lg px-3 py-12 flex flex-col justify-center',
+        wrapper: 'relative mx-auto z-50 max-w-lg min-h-full px-3 py-12 flex flex-col justify-center',
         modal: 'overflow-visible relative rounded',
         body: '',
         header: 'py-3 px-4 border-b rounded-t',
@@ -517,7 +517,7 @@ const settings = {
         close: 'bg-gray-100 text-gray-600 hover:bg-gray-200',
         closeIcon: 'fill-current h-4 w-4',
         overlay: 'bg-black flex flex-col justify-center items-center',
-        wrapper: 'z-50 w-96 px-3 py-12 flex-shrink-0',
+        wrapper: 'z-50 w-full sm:w-96 px-3 py-12 flex-shrink-0',
         dialog: 'bg-white shadow rounded text-left',
         body: 'py-4 px-3 space-y-4',
         buttons: 'bg-gray-100',
@@ -528,8 +528,8 @@ const settings = {
         title: 'text-lg font-semibold text-center',
         textWrapper: 'text-left w-full',
         text: '',
-        cancelButton: 'btn btn-white w-40',
-        okButton: 'btn btn-blue w-40',
+        cancelButton: 'btn btn-white w-36 sm:w-40',
+        okButton: 'btn btn-blue w-36 sm:w-40',
         inputWrapper: 'mt-3 flex items-center space-x-3',
         input: 'block w-full px-3 py-2 text-black placeholder-gray-400 transition duration-100 ease-in-out bg-white border border-gray-300 rounded shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed w-full',
         select: 'block w-full px-3 py-2 text-black placeholder-gray-400 transition duration-100 ease-in-out bg-white border border-gray-300 rounded shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed w-full',

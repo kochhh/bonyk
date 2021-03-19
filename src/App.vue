@@ -3,8 +3,8 @@
     <app-loader v-if="loading" />
     <div v-else>
       <app-navbar />
-      <main class="py-20 md:py-24">
-        <div class="container mx-auto overflow-y-autopy-4">
+      <main class="py-20">
+        <div class="container mx-auto overflow-y-auto py-4">
           <router-view />
         </div>
       </main>
