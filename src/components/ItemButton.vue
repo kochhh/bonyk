@@ -2,7 +2,7 @@
   <div class="w-28 h-28 md:w-40 md:h-36 ml-1 mb-1">
     <button
       type="button"
-      class="w-full h-full py-4 px-2 md:px-4 btn bg-gray-100 border-gray-300 rounded-sm shadow-none flex flex-col"
+      class="w-full h-full py-4 px-2 md:px-4 btn bg-gray-100 border-gray-300 rounded-sm shadow-none flex flex-col items-center"
       :class="{ 'bg-blue-50': item.isCustom }"
       @click.prevent="clickHandler"
     >

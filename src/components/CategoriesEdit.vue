@@ -21,14 +21,11 @@
             <li
               v-for="item in categories"
               :key="item.id"
-              class="ml-1 mt-1 w-24 h-20 p-2 flex flex-col items-center text-center bg-gray-100 border border-gray-200 text-xs rounded-sm"
+              class="ml-1 mt-1 w-24 h-24 p-3 flex flex-col items-center text-center bg-gray-100 border border-gray-300 rounded-sm"
             >
-              <span class="font-semibold">
-                {{ item.label }}
-              </span>
               <button
                 type="button"
-                class="btn btn-red py-1 px-3 shadow-none mt-auto"
+                class="btn btn-red p-1 shadow-none self-end"
                 @click="removeHandler(item.id)"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" fill="currentColor" viewBox="0 0 16 16">
@@ -36,6 +33,9 @@
                   <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                 </svg>
               </button>
+              <span class="font-semibold text-xs mt-auto">
+                {{ item.label }}
+              </span>
             </li>
           </ul>
         </div>
