@@ -23,7 +23,7 @@
               :key="item.id"
               class="ml-1 mt-1 w-24 h-20 p-2 flex flex-col items-center text-center bg-gray-100 border border-gray-200 text-xs rounded-sm"
             >
-              <span>
+              <span class="font-semibold">
                 {{ item.label }}
               </span>
               <button
@@ -40,7 +40,7 @@
           </ul>
         </div>
         <div class="py-3 px-4 rounded-b bg-gray-100 border-t border-gray-200">
-          <div class="flex justify-between items-center">
+          <div class="flex justify-end space-x-8 items-center">
             <button
               type="button"
               class="btn btn-link"

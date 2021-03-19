@@ -1,12 +1,10 @@
 <template>
   <div id="app">
-    <div v-if="loading" class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-      <app-loader />
-    </div>
+    <app-loader v-if="loading" />
     <div v-else>
       <app-navbar />
-      <main class="py-20">
-        <div class="container mx-auto overflow-y-auto py-2 md:py-4">
+      <main class="py-20 md:py-24">
+        <div class="container mx-auto overflow-y-autopy-4">
           <router-view />
         </div>
       </main>

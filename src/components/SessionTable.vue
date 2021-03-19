@@ -1,5 +1,5 @@
 <template>
-  <table class="min-w-full divide-y divide-gray-100 shadow-sm border border-gray-200 mb-8 text-xs md:text-sm">
+  <table class="min-w-full divide-y divide-gray-100 shadow-sm border border-gray-200 mb-8 text-sm">
     <thead>
       <tr>
         <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b align-top w-10">
@@ -71,10 +71,10 @@
         </td>
         <td class="px-3 py-2 text-right bg-gray-100 border-t" colspan="3">
           <div class="flex justify-end mb-2">
-            <span class="py-1 px-2 bg-white">
+            <span class="py-1 px-2 bg-white whitespace-nowrap">
               Cash: <span class="font-bold ml-1">{{ totalCash }} ₴</span>
             </span>
-            <span class="py-1 px-2 bg-yellow-50 ml-2">
+            <span class="py-1 px-2 bg-yellow-50 whitespace-nowrap ml-2">
               Card: <span class="font-bold ml-1">{{ totalCard }} ₴</span>
             </span>
           </div>

@@ -65,7 +65,7 @@
           </div>
         </div>
         <div class="py-3 px-4 rounded-b bg-gray-100 border-t border-gray-200">
-          <div class="flex justify-between items-center">
+          <div class="flex justify-end space-x-8 items-center">
             <button
               type="button"
               class="btn btn-link"
@@ -75,7 +75,7 @@
               type="submit"
               class="btn btn-green"
               :disabled="loading"
-              :class="{ 'disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-500': loading }"
+              :class="{ 'disabled:opacity-50 disabled:cursor-not-allowed': loading }"
             >Добавить</button>
           </div>
         </div>

@@ -1,3 +1,25 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 640px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 21px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .v-toast {
+    padding: .5rem 1rem;
+  }
+}
+
 .v-toast__item {
   min-height: auto;
 }

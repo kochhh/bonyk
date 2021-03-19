@@ -1,37 +1,37 @@
 <template>
   <div>
     <h1 class="mb-6">История смен</h1>
-    <div v-if="loading" class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-      <app-loader />
-    </div>
+    <app-loader v-if="loading" />
     <div v-else-if="!sessions">
       Здесь пока пусто.
     </div>
     <div v-else>
-      <table class="min-w-full divide-y divide-gray-100 shadow-sm border border-gray-200 mb-8 text-xs md:text-sm">
-        <thead>
-          <tr>
-            <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-10">
-              №
-            </th>
-            <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-48">
-              Открыта
-            </th>
-            <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-48">
-              Закрыта
-            </th>
-            <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-28">
-              Открыл
-            </th>
-            <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b">
-              Действия
-            </th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100">
-          <history-row v-for="item in items" :key="item.id" :item="item" />
-        </tbody>
-      </table>
+      <div class="w-full overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-100 shadow-sm border border-gray-200 mb-6 text-sm">
+          <thead>
+            <tr>
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-10">
+                №
+              </th>
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-48">
+                Открыта
+              </th>
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-48">
+                Закрыта
+              </th>
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-28">
+                Открыл
+              </th>
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b">
+                Действия
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <history-row v-for="item in items" :key="item.id" :item="item" />
+          </tbody>
+        </table>
+      </div>
       <t-pagination
         v-if="pageCount > pageSize"
         v-model="page"

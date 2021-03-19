@@ -3,7 +3,7 @@
     <input
       type="number"
       ref="input"
-      class="form-control w-16 p-3 border-l-0 border-r-0 rounded-none text-center order-2 text-xl font-semibold"
+      class="form-control w-16 h-12 p-2 border-l-0 border-r-0 rounded-none text-center order-2 text-xl leading-4 font-semibold"
       :name="name"
       :value="numericValue"
       :placeholder="placeholder"
@@ -20,31 +20,32 @@
     <button
       type="button"
       v-if="controls"
-      class="btn btn-blue p-3 rounded-tr-none rounded-br-none disabled:opacity-50 disabled:cursor-not-allowed order-1 relative"
+      class="btn btn-blue p-0 w-12 h-12 rounded-tr-none rounded-br-none disabled:opacity-50 disabled:cursor-not-allowed order-1 relative"
       :disabled="disabled || numericValue <= min"
       @mousedown="start(decrement)"
       @touchstart="$event.preventDefault(); start(decrement)"
       @touchend="$event.preventDefault(); stop($event)"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="w-8 h-8 mx-auto" fill="currentColor" viewBox="0 0 16 16">
         <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
       </svg>
     </button>
     <button
       type="button"
       v-if="controls"
-      class="btn btn-blue p-3 rounded-tl-none rounded-bl-none disabled:opacity-50 disabled:cursor-not-allowed order-3"
+      class="btn btn-blue p-0 w-12 h-12 rounded-tl-none rounded-bl-none disabled:opacity-50 disabled:cursor-not-allowed order-3"
       :disabled="disabled || numericValue >= max"
       @mousedown="start(increment)"
       @touchstart="$event.preventDefault(); start(increment)"
       @touchend="$event.preventDefault(); stop($event)"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="w-8 h-8 mx-auto" fill="currentColor" viewBox="0 0 16 16">
         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
       </svg>
     </button>
   </div>
 </template>
+
 <script>
 const timeInterval = 100
 
@@ -250,6 +251,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
   input[type=number] {
     appearance: textfield;

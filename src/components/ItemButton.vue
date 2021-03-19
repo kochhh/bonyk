@@ -1,18 +1,18 @@
 <template>
-  <div class="w-28 h-28 md:w-40 md:h-40 ml-0.5 md:ml-1 mb-0.5 md:mb-1">
+  <div class="w-28 h-28 md:w-40 md:h-36 ml-1 mb-1">
     <button
       type="button"
-      class="w-full h-full py-4 md:py-5 px-2 md:px-4 btn bg-gray-100 border-gray-300 rounded-sm shadow-none flex flex-col"
-      :class="{ 'justify-center': item.isCustom }"
+      class="w-full h-full py-4 px-2 md:px-4 btn bg-gray-100 border-gray-300 rounded-sm shadow-none flex flex-col"
+      :class="{ 'bg-blue-50': item.isCustom }"
       @click.prevent="clickHandler"
     >
-      <div class="w-full text-sm md:text-lg font-semibold" :class="{ 'flex-grow': !item.isCustom }">
-        <div class="max-w-full overflow-hidden overflow-ellipsis">
+      <div class="w-full flex-shrink-0 font-semibold text-2xl md:text-3xl leading-7" v-if="!item.isCustom">
+        {{ item.price }}
+      </div>
+      <div class="w-full flex-shrink-0 mt-auto font-semibold leading-4 md:leading-5 text-sm md:text-base">
+        <div class="line-clamp-2">
           {{ item.label }}
         </div>
-      </div>
-      <div class="w-full mt-auto text-2xl md:text-3xl font-semibold leading-5" v-if="!item.isCustom">
-        {{ item.price }}
       </div>
     </button>
     <t-modal-form
@@ -57,7 +57,7 @@
           </div>
         </div>
         <div class="py-3 px-4 rounded-b bg-gray-100 border-t border-gray-200">
-          <div class="flex justify-between items-center">
+          <div class="flex justify-end space-x-8 items-center">
             <button
               type="button"
               class="btn btn-link"
@@ -67,7 +67,7 @@
               type="submit"
               class="btn btn-green"
               :disabled="loading"
-              :class="{ 'disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-500': loading }"
+              :class="{ 'disabled:opacity-50 disabled:cursor-not-allowed': loading }"
             >Добавить</button>
           </div>
         </div>

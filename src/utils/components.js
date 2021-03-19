@@ -414,7 +414,7 @@ const settings = {
     props: {
       fixedClasses: {
         overlay: 'z-40 overflow-auto scrolling-touch left-0 top-0 bottom-0 right-0 w-full h-full fixed bg-opacity-50 focus:outline-none',
-        wrapper: 'relative mx-auto z-50 max-w-lg px-3 py-12 h-screen flex flex-col justify-center',
+        wrapper: 'relative mx-auto z-50 max-w-lg px-3 py-12 flex flex-col justify-center',
         modal: 'overflow-visible relative rounded',
         body: 'p-4',
         header: 'py-3 px-4 border-b rounded-t',
@@ -443,15 +443,15 @@ const settings = {
         leaveActiveClass: '',
         leaveToClass: ''
       },
-      variants: {
-        danger: {
-          overlay: 'bg-red-100',
-          header: 'border-red-50 text-red-700',
-          close: 'bg-red-50 text-red-700 hover:bg-red-200 border-red-100 border',
-          modal: 'bg-white border border-red-100 shadow-lg',
-          footer: 'bg-red-50'
-        }
-      }
+      // variants: {
+      //   danger: {
+      //     overlay: 'bg-red-100',
+      //     header: 'border-red-50 text-red-700',
+      //     close: 'bg-red-50 text-red-700 hover:bg-red-200 border-red-100 border',
+      //     modal: 'bg-white border border-red-100 shadow-lg',
+      //     footer: 'bg-red-50'
+      //   }
+      // }
     }
   },
   't-modal-form': {
@@ -459,7 +459,7 @@ const settings = {
     props: {
       fixedClasses: {
         overlay: 'z-40 overflow-auto scrolling-touch left-0 top-0 bottom-0 right-0 w-full h-full fixed bg-opacity-50 focus:outline-none',
-        wrapper: 'relative mx-auto z-50 max-w-lg px-3 py-12 h-screen flex flex-col justify-center',
+        wrapper: 'relative mx-auto z-50 max-w-lg px-3 py-12 flex flex-col justify-center',
         modal: 'overflow-visible relative rounded',
         body: '',
         header: 'py-3 px-4 border-b rounded-t',
@@ -488,15 +488,15 @@ const settings = {
         leaveActiveClass: '',
         leaveToClass: ''
       },
-      variants: {
-        danger: {
-          overlay: 'bg-red-100',
-          header: 'border-red-50 text-red-700',
-          close: 'bg-red-50 text-red-700 hover:bg-red-200 border-red-100 border',
-          modal: 'bg-white border border-red-100 shadow-lg',
-          footer: 'bg-red-50'
-        }
-      }
+      // variants: {
+      //   danger: {
+      //     overlay: 'bg-red-100',
+      //     header: 'border-red-50 text-red-700',
+      //     close: 'bg-red-50 text-red-700 hover:bg-red-200 border-red-100 border',
+      //     modal: 'bg-white border border-red-100 shadow-lg',
+      //     footer: 'bg-red-50'
+      //   }
+      // }
     }
   },
   't-dialog': {
@@ -555,19 +555,19 @@ const settings = {
         leaveActiveClass: '',
         leaveToClass: ''
       },
-      variants: {
-        danger: {
-          overlay: 'bg-red-100',
-          okButton: 'bg-red-500 hover:bg-red-600',
-          iconWrapper: 'bg-red-50',
-          buttons: 'bg-red-50',
-          icon: 'text-red-500'
-        },
-        horizontal: {
-          body: 'p-3 flex space-x-3',
-          title: 'text-lg font-semibold'
-        }
-      }
+      // variants: {
+      //   danger: {
+      //     overlay: 'bg-red-100',
+      //     okButton: 'bg-red-500 hover:bg-red-600',
+      //     iconWrapper: 'bg-red-50',
+      //     buttons: 'bg-red-50',
+      //     icon: 'text-red-500'
+      //   },
+      //   horizontal: {
+      //     body: 'p-3 flex space-x-3',
+      //     title: 'text-lg font-semibold'
+      //   }
+      // }
     }
   },
   // 't-table': {
@@ -597,7 +597,7 @@ const settings = {
     component: TPagination,
     props: {
       classes: {
-        wrapper: 'table border-collapse text-center bg-white mx-auto shadow-sm',
+        wrapper: 'table border-collapse text-center bg-white mx-auto my-4 shadow-sm',
         element: 'w-8 h-8 border border-gray-200 table-cell hover:border-blue-100',
         activeElement: 'w-8 h-8 border border-gray-200 border-blue-500 table-cell hover:border-blue-600',
         disabledElement: 'w-8 h-8 border border-gray-200 table-cell',
@@ -607,19 +607,19 @@ const settings = {
         button: 'hover:bg-blue-100 w-full h-full transition duration-100 ease-in-out focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50',
         ellipsis: ''
       },
-      variants: {
-        rounded: {
-          wrapper: 'bg-white mx-auto text-center flex space-x-2',
-          element: 'w-8 h-8 rounded-full',
-          activeElement: 'w-8 h-8 rounded-full',
-          disabledElement: 'w-8 h-8 rounded-full',
-          ellipsisElement: 'w-8 h-8 rounded-full hidden md:inline',
-          activeButton: 'border border-blue-500 bg-blue-500 w-full h-full rounded-full text-white hover:bg-blue-600 transition duration-100 ease-in-out focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50',
-          disabledButton: 'border border-gray-200 opacity-25 w-full h-full rounded-full cursor-not-allowed transition duration-100 ease-in-out',
-          button: 'border border-gray-200 hover:bg-blue-100 hover:border-blue-100 rounded-full w-full h-full transition duration-100 ease-in-out focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50',
-          ellipsis: ''
-        }
-      }
+      // variants: {
+      //   rounded: {
+      //     wrapper: 'bg-white mx-auto text-center flex space-x-2',
+      //     element: 'w-8 h-8 rounded-full',
+      //     activeElement: 'w-8 h-8 rounded-full',
+      //     disabledElement: 'w-8 h-8 rounded-full',
+      //     ellipsisElement: 'w-8 h-8 rounded-full hidden md:inline',
+      //     activeButton: 'border border-blue-500 bg-blue-500 w-full h-full rounded-full text-white hover:bg-blue-600 transition duration-100 ease-in-out focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50',
+      //     disabledButton: 'border border-gray-200 opacity-25 w-full h-full rounded-full cursor-not-allowed transition duration-100 ease-in-out',
+      //     button: 'border border-gray-200 hover:bg-blue-100 hover:border-blue-100 rounded-full w-full h-full transition duration-100 ease-in-out focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50',
+      //     ellipsis: ''
+      //   }
+      // }
     }
   },
   // 't-dropdown': {

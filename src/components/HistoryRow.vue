@@ -19,7 +19,7 @@
         <button
           type="button"
           class="btn btn-green py-1 px-2 shadow-none"
-          :class="{ 'disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-500': loading }"
+          :class="{ 'disabled:opacity-50 disabled:cursor-not-allowed': loading }"
           :disabled="loading"
           v-if="isSessionResumable && !isSession"
           @click="resumeHandler"

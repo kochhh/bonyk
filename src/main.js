@@ -3,7 +3,6 @@ import VueTailwind from 'vue-tailwind'
 import Vuelidate from 'vuelidate'
 import VueMeta from 'vue-meta'
 import VueToast from 'vue-toast-notification'
-import Paginate from 'vuejs-paginate'
 import JsonExcel from 'vue-json-excel'
 
 import App from './App.vue'
@@ -34,7 +33,6 @@ Vue.use(titlePlugin)
 Vue.filter('date', dateFilter)
 Vue.filter('currency', currencyFilter)
 Vue.component('AppLoader', AppLoader)
-Vue.component('Paginate', Paginate)
 Vue.component('downloadExcel', JsonExcel)
 
 firebase.initializeApp({

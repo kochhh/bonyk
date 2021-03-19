@@ -2,7 +2,7 @@
   <div>
     <button
       type="button"
-      class="btn w-full bg-gray-100 border-gray-300 rounded-sm shadow-none mb-4 md:mb-6 p-2 space-x-2 flex justify-center items-center text-sm md:text-base font-semibold"
+      class="btn w-full bg-gray-100 border-gray-300 rounded-sm shadow-none mb-4 md:mb-6 p-2 space-x-2 flex justify-center items-center font-semibold text-sm md:text-base"
       @click="$router.go(-1)"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -10,16 +10,14 @@
       </svg>
       <span>Назад</span>
     </button>
-    <div v-if="loading" class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-      <app-loader />
-    </div>
+    <app-loader v-if="loading" />
     <div v-else-if="!items.length" class="text-center">
       Здесь пока пусто.<br>
       <router-link :to="'/edit'" class="link">
         Создайте новую позицию
       </router-link>
     </div>
-    <div v-else class="flex flex-wrap justify-center -ml-0.5 md:-ml-1">
+    <div v-else class="flex flex-wrap justify-center -ml-1">
       <item-button v-for="item in items" :key="item.id" :item="item"></item-button>
     </div>
   </div>

@@ -28,20 +28,14 @@
                 ref="name"
                 class="form-control"
                 :class="{ 'border-red-500': $v.name.$dirty && !$v.name.required }"
-                placeholder="Имя (latin)"
+                placeholder="Имя (en)"
               >
-              <p class="mt-2 text-xs text-gray-300">
-                <span class="text-gray-500">beer</span><br>
-                <span class="text-gray-500">long</span><br>
-                <span class="text-gray-500">shot</span><br>
-                <span class="text-gray-500">strong</span><br>
-                <span class="text-gray-500">vodka</span><br>
-                <span class="text-gray-500">tequila</span><br>
-                <span class="text-gray-500">whiskey</span><br>
-                <span class="text-gray-500">wine</span><br>
-                <span class="text-gray-500">hot</span><br>
-                <span class="text-gray-500">cold</span><br>
-                <span class="text-gray-500">food</span>
+              <p class="mt-2 text-xs text-gray-400">
+                Есть иконки:
+                <br>
+                <span class="text-gray-500" v-for="(item, index) in names" :key="`name-${index}`">
+                  {{ item }}
+                </span>
               </p>
               <div
                 class="mt-2 text-red-500 text-xs"
@@ -59,7 +53,7 @@
           </div>
         </div>
         <div class="py-3 px-4 rounded-b bg-gray-100 border-t border-gray-200">
-          <div class="flex justify-between items-center">
+          <div class="flex justify-end space-x-8 items-center">
             <button
               type="button"
               class="btn btn-link"
@@ -69,7 +63,7 @@
               type="submit"
               class="btn btn-green"
               :disabled="loading"
-              :class="{ 'disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-500': loading }"
+              :class="{ 'disabled:opacity-50 disabled:cursor-not-allowed': loading }"
             >Добавить</button>
           </div>
         </div>
@@ -87,7 +81,8 @@ export default {
       loading: false,
       showModal: false,
       name: '',
-      label: ''
+      label: '',
+      names: ['beer', 'long', 'shot', 'strong', 'vodka', 'tequila', 'whiskey', 'wine', 'hot', 'cold', 'food']
     }
   },
   validations: {
