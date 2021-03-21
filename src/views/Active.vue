@@ -49,6 +49,7 @@ export default {
         id: this.$store.getters.session.id,
         isActive: true
       }))
+      .reverse()
       .map((el, index) => ({
         ...el,
         number: index + 1

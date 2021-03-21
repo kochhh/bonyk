@@ -1,3 +1,4 @@
+const colors = require('tailwindcss/colors')
 const flattenColorPalette = require('tailwindcss/lib/util/flattenColorPalette').default
 
 module.exports = {
@@ -8,8 +9,15 @@ module.exports = {
       './src/utils/components.js'
     ]
   },
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
+    colors: {
+      ...colors,
+      gray: colors.trueGray,
+      green: colors.emerald,
+      transparent: 'transparent',
+      current: 'currentColor'
+    },
     screens: {
       'sm': '576px',
       'md': '768px',
@@ -25,6 +33,8 @@ module.exports = {
   },
   variants: {
     extend: {
+      backgroundColor: ['checked'],
+      borderColor: ['checked'],
       opacity: ['disabled'],
       cursor: ['disabled']
     }
@@ -32,6 +42,7 @@ module.exports = {
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/line-clamp'),
+    require('tailwindcss-hyphens'),
 
     // plugin for individual border color
     ({ addUtilities, e, theme, variants }) => {

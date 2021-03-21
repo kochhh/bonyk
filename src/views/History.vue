@@ -7,27 +7,27 @@
     </div>
     <div v-else>
       <div class="w-full overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-100 shadow-sm border border-gray-200 mb-6 text-sm">
+        <table class="min-w-full shadow-sm border border-gray-200 dark:border-gray-700 mb-4 text-sm">
           <thead>
             <tr>
-              <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-10">
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-10">
                 №
               </th>
-              <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-48">
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-48">
                 Открыта
               </th>
-              <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-48">
-                Закрыта
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+                Мероприятие
               </th>
-              <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-28">
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-28">
                 Открыл
               </th>
-              <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b">
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-28">
                 Действия
               </th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-100">
+          <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
             <history-row v-for="item in items" :key="item.id" :item="item" />
           </tbody>
         </table>
@@ -66,7 +66,7 @@ export default {
     sessions: []
   }),
   async mounted() {
-    this.sessions = (await this.$store.dispatch('fetchSessionsList'))
+    this.sessions = (await this.$store.dispatch('fetchSessions'))
       .reverse()
       .map((el, index) => ({
         ...el,

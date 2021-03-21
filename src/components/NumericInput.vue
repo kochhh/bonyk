@@ -3,7 +3,7 @@
     <input
       type="number"
       ref="input"
-      class="form-control w-16 h-12 p-2 border-l-0 border-r-0 rounded-none text-center order-2 text-xl leading-4 font-semibold"
+      class="form-control w-16 h-12 p-2 border-l-0 border-r-0 rounded-none text-center order-2 text-xl leading-4 font-semibold dark:border-gray-600"
       :name="name"
       :value="numericValue"
       :placeholder="placeholder"

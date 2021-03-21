@@ -19,7 +19,7 @@
       @before-close="onBeforeClose"
     >
       <form @submit.prevent="submitHandler">
-        <div class="p-4">
+        <div class="py-8 px-4">
           <div class="flex space-x-2">
             <div class="flex-1">
               <input
@@ -34,7 +34,7 @@
                 Введите название позиции
               </div>
             </div>
-            <div class="flex-1">
+            <div class="flex-1" v-if="!isCustom">
               <input
                 type="text"
                 v-model.number.trim="price"
@@ -42,9 +42,6 @@
                 :class="{ 'border-red-500': $v.price.$dirty && !$v.price.required || $v.price.$dirty && !$v.price.numeric }"
                 placeholder="Цена, ₴"
               >
-              <div class="mt-2 text-gray-500 text-xs">
-                Для кастомной позиции укажите 0
-              </div>
               <div class="mt-2 text-red-500 text-xs" v-if="$v.price.$dirty && !$v.price.required">
                 Введите цену
               </div>
@@ -64,7 +61,7 @@
             </label>
           </div>
         </div>
-        <div class="py-3 px-4 rounded-b bg-gray-100 border-t border-gray-200">
+        <div class="py-3 px-4 border-t rounded-b bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-500">
           <div class="flex justify-end space-x-8 items-center">
             <button
               type="button"
@@ -108,6 +105,8 @@ export default {
   },
   methods: {
     async submitHandler() {
+      this.price = this.isCustom ? 0 : +this.price
+
       if (this.$v.$invalid) {
         this.$v.$touch()
         return
@@ -118,7 +117,7 @@ export default {
         const item = await this.$store.dispatch('createItem', {
           catId: this.category,
           label: this.label,
-          price: +this.price,
+          price: this.price,
           enabled: this.enabled,
           isCustom: this.isCustom
         })

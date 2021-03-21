@@ -16,12 +16,12 @@
       ref="modalCategoriesEdit"
     >
       <form>
-        <div class="p-4">
+        <div class="py-8 px-4">
           <ul class="list-none m-0 p-0 flex flex-wrap justify-center -ml-1 -mt-1">
             <li
               v-for="item in categories"
               :key="item.id"
-              class="ml-1 mt-1 w-24 h-24 p-3 flex flex-col items-center text-center bg-gray-100 border border-gray-300 rounded-sm"
+              class="ml-1 mt-1 w-24 h-24 p-3 flex flex-col items-center text-center bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-sm"
             >
               <button
                 type="button"
@@ -39,7 +39,7 @@
             </li>
           </ul>
         </div>
-        <div class="py-3 px-4 rounded-b bg-gray-100 border-t border-gray-200">
+        <div class="py-3 px-4 border-t rounded-b bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-500">
           <div class="flex justify-end space-x-8 items-center">
             <button
               type="button"

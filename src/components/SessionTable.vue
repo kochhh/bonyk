@@ -1,46 +1,70 @@
 <template>
-  <table class="min-w-full divide-y divide-gray-100 shadow-sm border border-gray-200 mb-8 text-sm">
+  <table class="min-w-full shadow-sm border border-gray-200 dark:border-gray-700 mb-4 text-sm">
     <thead>
       <tr>
-        <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b align-top w-10">
+        <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-10">
           №
         </th>
-        <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b align-top">
+        <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
           Позиция
         </th>
-        <th class="px-3 py-2 font-semibold text-right bg-gray-100 border-b align-top w-20">
+        <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-20">
+          Время
+        </th>
+        <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-20">
           Цена
         </th>
-        <th class="px-3 py-2 font-semibold text-right bg-gray-100 border-b align-top w-20">
+        <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-20">
           Кол-во
         </th>
-        <th class="px-3 py-2 font-semibold text-right bg-gray-100 border-b align-top w-20">
+        <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-20">
           Всего
         </th>
       </tr>
     </thead>
-    <tbody class="divide-y divide-gray-100">
+    <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
       <tr v-for="item in items" :key="item.id">
-        <td class="px-3 py-2 whitespace-nowrap align-top" :class="{ 'bg-yellow-50': item.byCard }">
+        <td
+          class="px-3 py-2 whitespace-nowrap align-top"
+          :class="{ 'bg-gray-200 dark:bg-gray-700': item.byCard }"
+        >
           {{ item.number }}
         </td>
-        <td class="px-3 py-2 align-top" :class="{ 'bg-yellow-50': item.byCard }">
+        <td
+          class="px-3 py-2 align-top"
+          :class="{ 'bg-gray-200 dark:bg-gray-700': item.byCard }"
+        >
           {{ item.label }}
         </td>
-        <td class="px-3 py-2 whitespace-nowrap text-right align-top" :class="{ 'bg-yellow-50': item.byCard }">
+        <td
+          class="px-3 py-2 whitespace-nowrap text-right align-top"
+          :class="{ 'bg-gray-200 dark:bg-gray-700': item.byCard }"
+        >
+          {{ item.time | date('time') }}
+        </td>
+        <td
+          class="px-3 py-2 whitespace-nowrap text-right align-top"
+          :class="{ 'bg-gray-200 dark:bg-gray-700': item.byCard }"
+        >
           {{ item.price }} ₴
         </td>
-        <td class="px-3 py-2 whitespace-nowrap text-right align-top" :class="{ 'bg-yellow-50': item.byCard }">
+        <td
+          class="px-3 py-2 whitespace-nowrap text-right align-top"
+          :class="{ 'bg-gray-200 dark:bg-gray-700': item.byCard }"
+        >
           {{ item.count }}
         </td>
-        <td class="px-3 py-2 whitespace-nowrap text-right align-top" :class="{ 'bg-yellow-50': item.byCard }">
+        <td
+          class="px-3 py-2 whitespace-nowrap text-right align-top"
+          :class="{ 'bg-gray-200 dark:bg-gray-700': item.byCard }"
+        >
           {{ item.price * item.count }} ₴
         </td>
       </tr>
     </tbody>
     <tfoot>
       <tr>
-        <td class="px-3 py-2 bg-gray-100 border-t align-bottom" colspan="2">
+        <td class="px-3 py-2 bg-gray-100 dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700 align-bottom" colspan="2">
           <download-excel
             class="inline-block text-gray-400 hover:text-gray-500 transition-colors cursor-pointer"
             tabindex="0"
@@ -69,12 +93,12 @@
             </svg>
           </download-excel>
         </td>
-        <td class="px-3 py-2 text-right bg-gray-100 border-t" colspan="3">
+        <td class="px-3 py-2 text-right bg-gray-100 dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700" colspan="4">
           <div class="flex justify-end mb-2">
-            <span class="py-1 px-2 bg-white whitespace-nowrap">
+            <span class="py-1 px-2 rounded-sm whitespace-nowrap">
               Cash: <span class="font-bold ml-1">{{ totalCash }} ₴</span>
             </span>
-            <span class="py-1 px-2 bg-yellow-50 whitespace-nowrap ml-2">
+            <span class="py-1 px-2 bg-gray-200 dark:bg-gray-700 rounded-sm whitespace-nowrap ml-2">
               Card: <span class="font-bold ml-1">{{ totalCard }} ₴</span>
             </span>
           </div>

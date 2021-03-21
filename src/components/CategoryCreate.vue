@@ -19,7 +19,7 @@
       @before-close="onBeforeClose"
     >
       <form @submit.prevent="submitHandler">
-        <div class="p-4">
+        <div class="py-8 px-4">
           <div class="flex space-x-2">
             <div class="flex-1">
               <input
@@ -52,7 +52,7 @@
             </div>
           </div>
         </div>
-        <div class="py-3 px-4 rounded-b bg-gray-100 border-t border-gray-200">
+        <div class="py-3 px-4 border-t rounded-b bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-500">
           <div class="flex justify-end space-x-8 items-center">
             <button
               type="button"

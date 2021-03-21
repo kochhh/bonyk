@@ -29,16 +29,24 @@
       </div>
       <app-loader v-if="itemsLoading" />
       <div v-else-if="items.length" class="w-full overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-100 shadow-sm border border-gray-200 mb-8 text-sm">
+        <table class="min-w-full shadow-sm border border-gray-200 dark:border-gray-700 mb-8 text-sm">
           <thead>
             <tr>
-              <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-12">Вкл?</th>
-              <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b">Название</th>
-              <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-16">Цена</th>
-              <th class="px-3 py-2 font-semibold text-left bg-gray-100 border-b w-24">Действия</th>
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-12">
+                Вкл?
+              </th>
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+                Название
+              </th>
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-20">
+                Цена
+              </th>
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-24">
+                Действия
+              </th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-100">
+          <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
             <items-edit-row
               v-for="item in items"
               :key="item.id"

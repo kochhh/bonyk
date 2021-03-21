@@ -9,7 +9,7 @@
       </router-link>
     </td>
     <td class="px-3 py-2 whitespace-nowrap">
-      {{ item.timeend | date('datetime') }}
+      {{ item.event || 'Без названия' }}
     </td>
     <td class="px-3 py-2 whitespace-nowrap">
       {{ item.name || '?' }}

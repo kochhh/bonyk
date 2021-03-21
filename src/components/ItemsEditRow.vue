@@ -14,12 +14,25 @@
       >
     </td>
     <td class="px-3 py-2">
-      <input type="text" class="form-control px-2 py-1 rounded-sm text-sm" v-model="item.label" v-if="editing">
-      <span v-else>{{ item.label }}</span>
+      <input
+        type="text"
+        class="form-control px-2 py-1 -mx-2 -my-1 rounded text-sm"
+        v-model="item.label" v-if="editing"
+      >
+      <span v-else>
+        {{ item.label }}
+      </span>
     </td>
     <td class="px-3 py-2 whitespace-nowrap">
-      <input type="text" class="form-control px-2 py-1 rounded-sm text-sm" v-model.number="item.price" v-if="editing">
-      <span v-else>{{ item.price }}</span>
+      <input
+        type="text"
+        class="form-control w-16 px-2 py-1 -mx-2 -my-1 rounded text-sm"
+        v-model.number="item.price"
+        v-if="editing && !item.isCustom"
+      >
+      <span v-else-if="!item.isCustom">
+        {{ item.price }}
+      </span>
     </td>
     <td class="px-3 py-2 whitespace-nowrap">
       <div class="flex space-x-2" v-if="!editing">
@@ -74,7 +87,7 @@ export default {
           enabled: this.$refs[this.item.id].checked,
           catId: this.category
         })
-        this.$toast.success('Список позиций успешно обновлён')
+        this.$toast.success('Список позиций обновлён')
       } catch(e) {}
     },
     editHandler() {
@@ -103,10 +116,10 @@ export default {
         await this.$store.dispatch('updateItem', {
           id: this.item.id,
           label: this.item.label,
-          price: this.item.price,
+          price: this.item.isCustom ? 0 : this.item.price,
           catId: this.category
         })
-        this.$toast.success('Позиция успешно обновлена')
+        this.$toast.success('Позиция обновлена')
         this.editing = false
       } catch(e) {}
     },

@@ -18,11 +18,11 @@ export default {
     }
   },
   actions: {
-    async createSession({ dispatch, commit }, timestart) {
+    async createSession({ dispatch, commit }, { timestart, event }) {
       try {
         const uid = await dispatch('getUserId')
         const name = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val().name
-        const key = (await firebase.database().ref(`/sessions/active`).push({ timestart, name })).key
+        const key = (await firebase.database().ref(`/sessions/active`).push({ timestart, name, event })).key
         const info = (await firebase.database().ref(`/sessions/active/${key}`).once('value')).val() || {}
         commit('setSession', { ...info, id: key })
       } catch (e) {
@@ -77,7 +77,7 @@ export default {
         throw e
       }
     },
-    async fetchSessionsList({ commit }) {
+    async fetchSessions({ commit }) {
       try {
         const list = (await firebase.database().ref(`/sessions/history`).once('value')).val() || {}
         return Object.keys(list).map(key => ({...list[key], id: key}))
