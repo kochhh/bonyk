@@ -8,7 +8,7 @@ module.exports = {
       './src/**/*.vue',
       './src/utils/components.js'
     ],
-    whitelistPatterns: [
+    safelist: [
       /-(leave|enter|appear)(|-(to|from|active))$/,
       /^(?!cursor-move).+-move$/,
       /^router-link(|-exact)-active$/
