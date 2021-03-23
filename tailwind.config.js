@@ -7,6 +7,11 @@ module.exports = {
       './public/**/*.html',
       './src/**/*.vue',
       './src/utils/components.js'
+    ],
+    whitelistPatterns: [
+      /-(leave|enter|appear)(|-(to|from|active))$/,
+      /^(?!cursor-move).+-move$/,
+      /^router-link(|-exact)-active$/
     ]
   },
   darkMode: 'class', // or 'media' or 'class'
