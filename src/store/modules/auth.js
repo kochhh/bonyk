@@ -15,9 +15,14 @@ export default {
       }
     },
     async logout({ commit }) {
-      await firebase.auth().signOut()
-      commit('clearSession')
-      commit('clearInfo')
+      try {
+        await firebase.auth().signOut()
+        commit('clearSession')
+        commit('clearInfo')
+      } catch (e) {
+        commit('setError', e)
+        throw e
+      }
     },
     async register({ dispatch, commit }, { email, password, name }) {
       try {

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-80 mx-auto">
+  <div class="max-w-xs mx-auto">
     <h1 class="mb-6 text-center">Регистрация</h1>
     <form @submit.prevent="submitHandler" novalidate>
       <div class="mb-4">
