@@ -21,13 +21,13 @@
       <form @submit.prevent="submitHandler">
         <div class="py-8 px-4">
           <div class="flex space-x-2">
-            <div class="flex-1">
+            <div class="flex-shrink-0 w-36">
               <input
                 type="text"
                 v-model.trim="name"
                 ref="name"
                 class="form-control"
-                :class="{ 'border-red-500': $v.name.$dirty && !$v.name.required }"
+                :class="{ 'border-red-500 dark:border-red-500': $v.name.$dirty && !$v.name.required }"
                 placeholder="Имя (en)"
               >
               <p class="mt-2 text-xs text-gray-400">
@@ -42,7 +42,7 @@
                 v-if="$v.name.$dirty && !$v.name.required"
               >Введите имя категории</div>
             </div>
-            <div class="flex-1">
+            <div class="flex-grow">
               <input
                 type="text"
                 v-model.trim="label"
@@ -52,7 +52,7 @@
             </div>
           </div>
         </div>
-        <div class="py-3 px-4 border-t rounded-b bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-500">
+        <div class="py-3 px-4 border-t rounded-b bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600">
           <div class="flex justify-end space-x-8 items-center">
             <button
               type="button"
@@ -82,7 +82,7 @@ export default {
       showModal: false,
       name: '',
       label: '',
-      names: ['beer', 'long', 'shot', 'strong', 'vodka', 'tequila', 'whiskey', 'wine', 'hot', 'cold', 'food']
+      names: ['beer', 'long', 'shot', 'strong', 'vodka', 'tequila', 'whiskey', 'cognac', 'wine', 'hot', 'cold', 'coffee', 'food']
     }
   },
   validations: {

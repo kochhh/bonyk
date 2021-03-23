@@ -51,7 +51,7 @@ const router = new VueRouter({
       component: () => import('@/views/History.vue')
     },
     {
-      path: '/history/:id/:timestart',
+      path: '/history/:id',
       name: 'Session',
       meta: {
         requiresAuth: true
@@ -74,7 +74,7 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
 
   if (!loggedIn && requiresAuth) {
-    next('/login?message=nologin')
+    next('/login')
   } else {
     next()
   }

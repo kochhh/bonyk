@@ -14,7 +14,7 @@
         <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-20">
           Цена
         </th>
-        <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-20">
+        <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-20 whitespace-nowrap">
           Кол-во
         </th>
         <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-20">
@@ -70,9 +70,11 @@
             tabindex="0"
             :fetch="fetchData"
             :fields="dataFields"
+            :header="dataHeader"
             :footer="dataFooter"
             type="csv"
-            :name="`mmc-${getFormattedTime}.csv`"
+            :name="`mmc-${getFormattedTime()}.csv`"
+            title="Скачать в формате CSV"
             v-if="!isSession"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="28" fill="currentColor" viewBox="0 0 384 512">
@@ -84,8 +86,10 @@
             tabindex="0"
             :fetch="fetchData"
             :fields="dataFields"
+            :header="dataHeader"
             :footer="dataFooter"
-            :name="`mmc-${getFormattedTime}.xls`"
+            :name="`mmc-${getFormattedTime()}.xls`"
+            title="Скачать в формате XLS"
             v-if="!isSession"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="28" fill="currentColor" viewBox="0 0 384 512">
@@ -124,6 +128,8 @@ export default {
     }
   },
   data: () => ({
+    info: {},
+    dataHeader: [],
     dataFooter: []
   }),
   computed: {
@@ -143,15 +149,6 @@ export default {
     isSession() {
       return Object.keys(this.$store.getters.session).length > 0
     },
-    getFormattedTime() {
-      const date = new Date(+this.$route.params.timestart)
-      const year = date.getFullYear()
-      const month = date.getMonth() < 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
-      const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
-      const hour = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()
-      const min = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
-      return `${year}${month}${day}-${hour}${min}`
-    },
     dataFields() {
       return {
         '№': 'number',
@@ -166,12 +163,26 @@ export default {
     }
   },
   methods: {
-    async fetchData() {
-      const res = (await this.$store.dispatch('fetchOrders', {
+    async fetchSessionInfo() {
+      return (await this.$store.dispatch('fetchSessionById', {
         id: this.$route.params.id
       }))
+    },
+    getFormattedTime() {
+      const date = new Date(+this.info.timestart)
+      const year = date.getFullYear()
+      const month = date.getMonth() < 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
+      const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
+      const hour = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()
+      const min = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
+      return `${year}${month}${day}-${hour}${min}`
+    },
+    async fetchData() {
+      const orders = await this.$store.dispatch('fetchOrders', {
+        id: this.$route.params.id
+      })
 
-      const resMapped = res.map((item, index) => {
+      const ordersData = orders.map((item, index) => {
         const container = {}
         const { category, label, price, count, byCard, time } = item
 
@@ -187,17 +198,26 @@ export default {
         return container
       })
 
-      const cash = res.filter(el => !el.byCard).reduce((acc, cur) => acc + +cur.count * +cur.price, 0) || 0
-      const card = res.filter(el => el.byCard).reduce((acc, cur) => acc + +cur.count * +cur.price, 0) || 0
-      const total = cash + card
+      this.dataHeader = [
+        `Открыта: ${this.$options.filters.date(this.info.timestart, 'datetime')}`,
+        `Закрыта: ${this.$options.filters.date(this.info.timeend, 'datetime')}`,
+        `Мероприятие: ${this.info.event}`,
+        `Бармен: ${this.info.name}`
+      ]
+      const byCash = orders.filter(el => !el.byCard).reduce((acc, cur) => acc + +cur.count * +cur.price, 0) || 0
+      const byCard = orders.filter(el => el.byCard).reduce((acc, cur) => acc + +cur.count * +cur.price, 0) || 0
+      const total = byCash + byCard
       this.dataFooter = [
-        `Наличные: ${cash} ₴`,
-        `Карта: ${card} ₴`,
+        `Наличные: ${byCash} ₴`,
+        `Карта: ${byCard} ₴`,
         `Всего: ${total} ₴`
       ]
 
-      return resMapped
+      return ordersData
     }
+  },
+  async mounted() {
+    this.info = await this.fetchSessionInfo()
   }
 }
 </script>

@@ -1,9 +1,12 @@
 <template>
-  <div class="w-28 h-28 md:w-40 md:h-36 ml-1 mb-1">
+  <div class="w-28 h-28 md:w-40 md:h-36 ml-2 mt-2">
     <button
       type="button"
-      class="w-full h-full py-4 px-2 md:px-4 flex flex-col items-center bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring rounded-sm font-semibold text-center"
-      :class="{ 'bg-blue-50': item.isCustom }"
+      class="w-full h-full py-4 px-2 md:px-4 flex flex-col items-center border focus:outline-none focus:ring rounded-sm font-semibold text-center"
+      :class="{
+        'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700': !item.isCustom,
+        'bg-gray-200 dark:bg-gray-700 border-gray-300 dark:border-gray-600': item.isCustom
+      }"
       @click.prevent="clickHandler"
     >
       <div class="w-full flex-shrink-0 text-2xl md:text-3xl leading-7" v-if="!item.isCustom">
@@ -24,7 +27,7 @@
         {{ item.category }}: {{ item.label }}
       </template>
       <form @submit.prevent="addHandler">
-        <div class="py-12 px-4">
+        <div class="py-12 px-4 text-center">
           <div class="relative">
             <numeric-input
               v-model="count"
@@ -32,7 +35,7 @@
               :max="10"
               :step="1"
             />
-            <label class="flex justify-center items-center space-x-2 mt-4 sm:mt-0 sm:absolute sm:right-0 sm:top-1/2 sm:transform sm:-translate-y-1/2">
+            <label class="inline-flex justify-center items-center space-x-2 mt-6 sm:mt-0 sm:absolute sm:right-0 sm:top-1/2 sm:transform sm:-translate-y-1/2">
               <input
                 type="checkbox"
                 class="checkbox dark:border-gray-600"
@@ -41,7 +44,7 @@
               <span>На карту</span>
             </label>
           </div>
-          <div class="mt-8 mx-auto w-32" v-if="item.isCustom">
+          <div class="mt-6 mx-auto w-28" v-if="item.isCustom">
             <input
               type="text"
               v-model="customPrice"
@@ -52,11 +55,11 @@
               Введите цену
             </div>
             <div class="mt-2 text-red-500 text-xs" v-if="$v.customPrice.$dirty && !$v.customPrice.numeric">
-              Введите цену числом
+              Введите число
             </div>
           </div>
         </div>
-        <div class="py-3 px-4 border-t rounded-b bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-500">
+        <div class="py-3 px-4 border-t rounded-b bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600">
           <div class="flex justify-end space-x-8 items-center">
             <button
               type="button"

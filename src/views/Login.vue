@@ -13,7 +13,7 @@
           class="form-control"
           placeholder="E-mail"
           v-model.trim="email"
-          :class="{ 'border-red-500': ($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email) }"
+          :class="{ 'border-red-500 dark:border-red-500': ($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email) }"
         >
         <div
           class="mt-2 text-red-500 text-xs"
@@ -35,7 +35,7 @@
           class="form-control"
           placeholder="Пароль"
           v-model.trim="password"
-          :class="{ 'border-red-500': $v.password.$dirty && !$v.password.required }"
+          :class="{ 'border-red-500 dark:border-red-500': $v.password.$dirty && !$v.password.required }"
         >
         <div
           class="mt-2 text-red-500 text-xs"

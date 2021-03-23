@@ -6,7 +6,7 @@
       <router-link :to="'/edit'" class="link">Добавьте категорию</router-link>
     </div>
     <div v-else>
-      <div class="flex flex-wrap justify-center -ml-1">
+      <div class="flex flex-wrap justify-center -ml-2 -mt-2">
         <category-button v-for="category in categories" :key="category.id" :category="category" />
       </div>
     </div>
@@ -33,8 +33,8 @@ export default {
   }),
   async mounted() {
     try {
-      this.categories = await this.$store.dispatch('fetchCategories')
-      // this.categories = this.categories.filter(el => el.items)
+      this.categories = (await this.$store.dispatch('fetchCategories'))
+        .sort((a, b) => a.order - b.order)
       this.loading = false
     } catch (e) {}
 

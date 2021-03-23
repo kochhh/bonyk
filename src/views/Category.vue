@@ -8,7 +8,7 @@
         Создайте новую позицию
       </router-link>
     </div>
-    <div v-else class="flex flex-wrap justify-center -ml-1">
+    <div v-else class="flex flex-wrap justify-center -ml-2 -mt-2">
       <item-button v-for="item in items" :key="item.id" :item="item"></item-button>
     </div>
   </div>

@@ -21,32 +21,32 @@
       <form @submit.prevent="submitHandler">
         <div class="py-8 px-4">
           <div class="flex space-x-2">
-            <div class="flex-1">
+            <div class="flex-grow">
               <input
                 type="text"
                 ref="label"
                 v-model.trim="label"
                 class="form-control"
-                :class="{ 'border-red-500': $v.label.$dirty && !$v.label.required }"
+                :class="{ 'border-red-500 dark:border-red-500': $v.label.$dirty && !$v.label.required }"
                 placeholder="Название, объём"
               >
               <div class="mt-2 text-red-500 text-xs" v-if="$v.label.$dirty && !$v.label.required">
                 Введите название позиции
               </div>
             </div>
-            <div class="flex-1" v-if="!isCustom">
+            <div class="flex-shrink-0 w-28" v-if="!isCustom">
               <input
                 type="text"
                 v-model.number.trim="price"
                 class="form-control"
-                :class="{ 'border-red-500': $v.price.$dirty && !$v.price.required || $v.price.$dirty && !$v.price.numeric }"
+                :class="{ 'border-red-500 dark:border-red-500': $v.price.$dirty && !$v.price.required || $v.price.$dirty && !$v.price.numeric }"
                 placeholder="Цена, ₴"
               >
               <div class="mt-2 text-red-500 text-xs" v-if="$v.price.$dirty && !$v.price.required">
                 Введите цену
               </div>
               <div class="mt-2 text-red-500 text-xs" v-if="$v.price.$dirty && !$v.price.numeric">
-                Введите цену числом
+                Введите число
               </div>
             </div>
           </div>
@@ -61,7 +61,7 @@
             </label>
           </div>
         </div>
-        <div class="py-3 px-4 border-t rounded-b bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-500">
+        <div class="py-3 px-4 border-t rounded-b bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600">
           <div class="flex justify-end space-x-8 items-center">
             <button
               type="button"

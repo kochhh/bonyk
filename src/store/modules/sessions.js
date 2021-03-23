@@ -34,7 +34,7 @@ export default {
       try {
         const sessions = (await firebase.database().ref(`/sessions/active`).once('value')).val()
         if (sessions) {
-          const info = Object.keys(sessions).map(key => ({...sessions[key], id: key}))[0]
+          const info = Object.keys(sessions).map(key => ({ ...sessions[key], id: key }))[0]
           commit('setSession', info)
         }
       } catch (e) {
@@ -80,7 +80,16 @@ export default {
     async fetchSessions({ commit }) {
       try {
         const list = (await firebase.database().ref(`/sessions/history`).once('value')).val() || {}
-        return Object.keys(list).map(key => ({...list[key], id: key}))
+        return Object.keys(list).map(key => ({ ...list[key], id: key }))
+      } catch (e) {
+        commit('setError', e)
+        throw e
+      }
+    },
+    async fetchSessionById({ commit }, { id, isActive = false }) {
+      try {
+        const where = isActive ? 'active' : 'history'
+        return (await firebase.database().ref(`/sessions/${where}/${id}`).once('value')).val() || {}
       } catch (e) {
         commit('setError', e)
         throw e
@@ -90,7 +99,7 @@ export default {
       try {
         const where = isActive ? 'active' : 'history'
         const orders = (await firebase.database().ref(`/sessions/${where}/${id}/orders`).once('value')).val() || {}
-        return Object.keys(orders).map(key => ({...orders[key], id: key}))
+        return Object.keys(orders).map(key => ({ ...orders[key], id: key }))
       } catch (e) {
         commit('setError', e)
         throw e
