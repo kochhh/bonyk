@@ -24,7 +24,7 @@
           v-if="$v.email.$dirty && !$v.email.email"
         >Введите корректный e-mail</div>
       </div>
-      <div class="mb-6">
+      <div class="mb-4">
         <label
           for="password"
           class="sr-only"
@@ -42,7 +42,7 @@
           v-if="$v.password.$dirty && !$v.password.required"
         >Введите пароль</div>
       </div>
-      <div class="text-center">
+      <div class="mt-6 text-center">
         <button
           type="submit"
           class="btn btn-green"
