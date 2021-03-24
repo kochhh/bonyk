@@ -33,10 +33,9 @@ export default {
     async getActiveSession({ commit }) {
       try {
         const sessions = (await firebase.database().ref(`/sessions/active`).once('value')).val()
-        if (sessions) {
-          const info = Object.keys(sessions).map(key => ({ ...sessions[key], id: key }))[0]
-          commit('setSession', info)
-        }
+        if (!sessions) return
+        const info = Object.keys(sessions).map(key => ({ ...sessions[key], id: key }))[0]
+        commit('setSession', info)
       } catch (e) {
         commit('setError', e)
         throw e

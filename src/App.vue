@@ -1,58 +1,34 @@
 <template>
   <div id="app">
-    <app-loader v-if="loading" />
-    <div v-else>
-      <app-navbar />
-      <main class="py-20 md:py-24">
-        <div class="container mx-auto">
-          <router-view />
-        </div>
-      </main>
-      <app-footer />
-    </div>
+    <component :is="layout">
+      <router-view />
+    </component>
   </div>
 </template>
 
 <script>
-import AppNavbar from '@/components/app/Navbar'
-import AppFooter from '@/components/app/Footer'
-import messages from '@/utils/messages'
+import MainLayout from '@/layouts/MainLayout'
+import EmptyLayout from '@/layouts/EmptyLayout'
 
 export default {
-  data: () => ({
-    loading: true
-  }),
   components: {
-    AppNavbar, AppFooter
+    EmptyLayout, MainLayout
   },
   computed: {
-    isUser() {
-      return Object.keys(this.$store.getters.info).length > 0
+    layout() {
+      return (this.$route.meta.layout || 'empty') + '-layout'
     },
-    user() {
-      return this.$store.getters.info
-    },
-    isSession() {
-      return Object.keys(this.$store.getters.session).length > 0
-    },
-    session() {
-      return this.$store.getters.session
-    },
-    error() {
-      return this.$store.getters.error
+    theme() {
+      return this.$store.getters.theme
     }
   },
   watch: {
-    error(fbError) {
-      this.$toast.error(messages[fbError.code] || 'Что-то пошло не так')
+    theme(newTheme) {
+      document.documentElement.classList.toggle('dark', newTheme === 'dark')
     }
   },
-  async mounted() {
-    await this.$store.dispatch('fetchInfo')
-    if (this.isUser) {
-      await this.$store.dispatch('getActiveSession')
-    }
-    this.loading = false
+  beforeMount() {
+    this.$store.dispatch('initTheme')
   }
 }
 </script>

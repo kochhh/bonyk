@@ -17,7 +17,6 @@ export default {
     async logout({ commit }) {
       try {
         await firebase.auth().signOut()
-        commit('clearSession')
         commit('clearInfo')
       } catch (e) {
         commit('setError', e)

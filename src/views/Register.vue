@@ -53,7 +53,9 @@
           class="form-control"
           placeholder="Пароль"
           v-model.trim="password"
-          :class="{ 'border-red-500 dark:border-red-500': ($v.password.$dirty && !$v.password.required) || ($v.password.$dirty && !$v.password.minLength) }"
+          :class="{ 'border-red-500 dark:border-red-500':
+              ($v.password.$dirty && !$v.password.required) ||
+              ($v.password.$dirty && !$v.password.minLength) }"
         >
         <div
           class="mt-2 text-red-500 text-xs"
@@ -63,6 +65,26 @@
           class="mt-2 text-red-500 text-xs"
           v-if="$v.password.$dirty && !$v.password.minLength"
         >Пароль должен быть не менее {{ $v.password.$params.minLength.min }} символов</div>
+      </div>
+      <div class="mb-6">
+        <label
+          for="repeat_password"
+          class="sr-only"
+        >Повторите пароль</label>
+        <input
+          type="password"
+          id="repeat_password"
+          class="form-control"
+          placeholder="Повторите пароль"
+          v-model.trim="repeatPassword"
+          :class="{ 'border-red-500 dark:border-red-500':
+              ($v.repeatPassword.$dirty && !$v.repeatPassword.required) ||
+              ($v.repeatPassword.$dirty && !$v.repeatPassword.sameAsPassword) }"
+        >
+        <div
+          class="mt-2 text-red-500 text-xs"
+          v-if="$v.password.$dirty && !$v.repeatPassword.sameAsPassword"
+        >Пароли должны совпадать</div>
       </div>
       <div class="text-center">
         <button
@@ -75,7 +97,7 @@
 </template>
 
 <script>
-import { email, required, minLength } from 'vuelidate/lib/validators'
+import { email, required, sameAs, minLength } from 'vuelidate/lib/validators'
 
 export default {
   name: 'Register',
@@ -87,11 +109,13 @@ export default {
   data: () => ({
     email: '',
     password: '',
+    repeatPassword: '',
     name: ''
   }),
   validations: {
     email: { email, required },
     password: { required, minLength: minLength(6) },
+    repeatPassword: { required, sameAsPassword: sameAs('password') },
     name: { required }
   },
   methods: {

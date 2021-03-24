@@ -1,11 +1,6 @@
 import firebase from 'firebase/app'
 
 export default {
-  state: {
-    categories: []
-  },
-  mutations: {
-  },
   actions: {
     async createCategory({ commit, dispatch }, { name, label, enabled }) {
       try {
@@ -94,8 +89,5 @@ export default {
         throw e
       }
     }
-  },
-  getters: {
-    categories: s => s.categories
   }
 }

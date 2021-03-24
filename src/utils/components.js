@@ -601,7 +601,7 @@ const settings = {
         element: '-ml-px',
         activeElement: '-ml-px',
         disabledElement: '-ml-px',
-        ellipsisElement: '-ml-px hidden md:block',
+        ellipsisElement: '-ml-px',
         button: 'w-8 h-8 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 hover:border-gray-200 dark:hover:border-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 transition duration-100 ease-in-out',
         activeButton: 'w-8 h-8 bg-blue-500 text-white border border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 transition duration-100 ease-in-out relative z-10',
         disabledButton: 'w-8 h-8 border border-gray-200 dark:border-gray-700 opacity-25 cursor-not-allowed transition duration-100 ease-in-out',
