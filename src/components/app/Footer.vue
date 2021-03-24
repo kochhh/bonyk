@@ -10,7 +10,7 @@
             {{ date | date('timesec') }}
           </span>
         </div>
-        <moneyflow v-if="isSession" />
+        <moneyflow v-if="isSession && isOwnSession" />
         <div v-if="isSession" class="ml-auto">
           <span class="flex items-center space-x-1 bg-green-500 text-white py-1 pl-1.5 pr-2 rounded-sm text-sm">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
@@ -49,6 +49,9 @@ export default {
     },
     session() {
       return this.$store.getters.session
+    },
+    isOwnSession() {
+      return this.$store.getters.info.uid === this.$store.getters.session.uid
     }
   },
   mounted() {

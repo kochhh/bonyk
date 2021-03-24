@@ -22,7 +22,7 @@ export default {
       try {
         const uid = await dispatch('getUserId')
         const name = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val().name
-        const key = (await firebase.database().ref(`/sessions/active`).push({ timestart, name, event })).key
+        const key = (await firebase.database().ref(`/sessions/active`).push({ timestart, event, name, uid })).key
         const info = (await firebase.database().ref(`/sessions/active/${key}`).once('value')).val() || {}
         commit('setSession', { ...info, id: key })
       } catch (e) {

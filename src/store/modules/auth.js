@@ -27,7 +27,7 @@ export default {
       try {
         await firebase.auth().createUserWithEmailAndPassword(email, password)
         const uid = await dispatch('getUserId')
-        await firebase.database().ref(`/users/${uid}/info`).set({ name })
+        await firebase.database().ref(`/users/${uid}/info`).set({ name, uid })
       } catch (e) {
         commit('setError', e)
         throw e

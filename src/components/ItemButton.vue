@@ -112,16 +112,21 @@ export default {
     session() {
       return this.$store.getters.session
     },
+    isOwnSession() {
+      return this.$store.getters.info.uid === this.$store.getters.session.uid
+    },
     timestamp() {
       return this.date.getTime()
     }
   },
   methods: {
     clickHandler() {
-      if (this.isSession) {
-        this.showOrderModal = true
-      } else {
+      if (!this.isSession) {
         this.$toast.default('Смена не открыта')
+      } else if (!this.isOwnSession) {
+        this.$toast.default('Смена занята')
+      } else {
+        this.showOrderModal = true
       }
     },
     async addHandler() {

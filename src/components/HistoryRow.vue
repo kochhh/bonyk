@@ -26,7 +26,7 @@
           :class="{ 'disabled:opacity-50 disabled:cursor-not-allowed': isSession }"
           :disabled="isSession"
           @click="resumeHandler"
-          title="Продолжить смену"
+          :title="!isSession ? 'Продолжить смену' : 'Недоступно'"
           v-if="isSessionResumable"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 16 16">
