@@ -1,6 +1,13 @@
 <template>
   <div>
     <app-loader v-if="loading" />
+    <div v-else-if="isForbidden">
+      <main class="py-20 md:py-24 min-h-screen flex flex-col">
+        <div class="container m-auto">
+          <h1 class="my-auto text-xl text-center font-mono font-semibold">maintenance mode</h1>
+        </div>
+      </main>
+    </div>
     <div v-else>
       <app-navbar />
       <main class="py-20 md:py-24">
@@ -28,10 +35,14 @@ export default {
   computed: {
     error() {
       return this.$store.getters.error
+    },
+    isForbidden() {
+      return this.$store.getters.error && this.$store.getters.error.code === 'PERMISSION_DENIED'
     }
   },
   watch: {
     error(fbError) {
+      this.loading = false
       this.$toast.error(messages[fbError.code] || 'Что-то пошло не так')
     }
   },

@@ -32,7 +32,7 @@
             <numeric-input
               v-model="count"
               :min="1"
-              :max="10"
+              :max="20"
               :step="1"
             />
             <label class="inline-flex justify-center items-center space-x-2 mt-6 sm:mt-0 sm:absolute sm:right-0 sm:top-1/2 sm:transform sm:-translate-y-1/2">
@@ -112,7 +112,7 @@ export default {
     session() {
       return this.$store.getters.session
     },
-    isOwnSession() {
+    isSessionOwn() {
       return this.$store.getters.info.uid === this.$store.getters.session.uid
     },
     timestamp() {
@@ -123,7 +123,7 @@ export default {
     clickHandler() {
       if (!this.isSession) {
         this.$toast.default('Смена не открыта')
-      } else if (!this.isOwnSession) {
+      } else if (!this.isSessionOwn) {
         this.$toast.default('Смена занята')
       } else {
         this.showOrderModal = true

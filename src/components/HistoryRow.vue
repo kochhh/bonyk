@@ -27,7 +27,7 @@
           :disabled="isSession"
           @click="resumeHandler"
           :title="!isSession ? 'Продолжить смену' : 'Недоступно'"
-          v-if="isSessionResumable"
+          v-if="isSessionRecent && isSessionOwn"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 16 16">
             <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
@@ -55,8 +55,11 @@ export default {
     isSession() {
       return Object.keys(this.$store.getters.session).length > 0
     },
-    isSessionResumable() {
+    isSessionRecent() {
       return this.timestamp - this.item.timestart < 24 * 60 * 60 * 1000
+    },
+    isSessionOwn() {
+      return this.$store.getters.info.uid === this.item.uid
     }
   },
   methods: {

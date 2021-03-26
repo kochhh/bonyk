@@ -45,6 +45,13 @@ export default {
     items: [],
     totalItems: []
   }),
+  watch: {
+    $route(to) {
+      if (!to.query.page) {
+        this.page = 1
+      }
+    }
+  },
   async mounted() {
     this.loading = true
     this.items = (await this.$store.dispatch('fetchOrders', {
@@ -58,13 +65,6 @@ export default {
     this.totalItems = this.items
     this.setupPagination(this.items)
     this.loading = false
-  },
-  watch: {
-    $route(to) {
-      if (!to.query.page) {
-        this.page = 1
-      }
-    }
   }
 }
 </script>

@@ -18,37 +18,23 @@
 export default {
   name: 'Moneyflow',
   computed: {
-    ordersBase() {
+    orders() {
       return this.$store.getters.session.orders
     },
-    ordersState() {
-      return this.$store.getters.orders
-    },
     cash() {
-      const ordersBase = this.ordersBase && Object.keys(this.ordersBase).length > 0 ?
-        Object.keys(this.ordersBase)
-          .map(key => ({...this.ordersBase[key]}))
-          .filter(el => !el.byCard)
-          .reduce((acc, cur) => acc + +cur.count * +cur.price, 0) : 0
-      const ordersState = this.ordersState && Object.keys(this.ordersState).length > 0 ?
-        this.ordersState
-          .filter(el => !el.byCard)
-          .reduce((acc, cur) => acc + +cur.count * +cur.price, 0) : 0
-
-      return ordersBase + ordersState
+      return this.calculator(this.orders, false)
     },
     card() {
-      const ordersBase = this.ordersBase && Object.keys(this.ordersBase).length > 0 ?
-        Object.keys(this.ordersBase)
-          .map(key => ({...this.ordersBase[key]}))
-          .filter(el => el.byCard)
+      return this.calculator(this.orders, true)
+    }
+  },
+  methods: {
+    calculator(data, payment) {
+      return data && Object.keys(data).length > 0 ?
+        Object.keys(data)
+          .map(key => ({...data[key]}))
+          .filter(el => payment ? el.byCard : !el.byCard)
           .reduce((acc, cur) => acc + +cur.count * +cur.price, 0) : 0
-      const ordersState = this.ordersState && Object.keys(this.ordersState).length > 0 ?
-        this.ordersState
-          .filter(el => el.byCard)
-          .reduce((acc, cur) => acc + +cur.count * +cur.price, 0) : 0
-
-      return ordersBase + ordersState
     }
   }
 }

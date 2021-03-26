@@ -2,27 +2,29 @@
   <table class="min-w-full shadow-sm border border-gray-200 dark:border-gray-700 mb-4 text-sm">
     <thead>
       <tr>
-        <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-10">
+        <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 w-10">
           №
         </th>
-        <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+        <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
           Позиция
         </th>
-        <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-20">
+        <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 w-20">
           Время
         </th>
-        <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-20">
+        <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 w-20">
           Цена
         </th>
-        <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-20 whitespace-nowrap">
+        <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 w-20 whitespace-nowrap">
           Кол-во
         </th>
-        <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-20">
+        <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 w-20">
           Всего
+        </th>
+        <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 w-12">
         </th>
       </tr>
     </thead>
-    <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
       <tr v-for="item in items" :key="item.id">
         <td
           class="px-3 py-2 whitespace-nowrap align-top"
@@ -59,6 +61,26 @@
           :class="{ 'bg-gray-200 dark:bg-gray-700': item.byCard }"
         >
           {{ item.price * item.count }} ₴
+        </td>
+        <td
+          class="px-3 py-2 whitespace-nowrap align-top"
+          :class="{ 'bg-gray-200 dark:bg-gray-700': item.byCard }"
+        >
+          <div class="flex items-center">
+            <button
+              type="button"
+              class="btn btn-red py-1 px-2 shadow-none"
+              @click="removeHandler(item.id)"
+              title="Удалить заказ"
+              v-if="isSession"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+              </svg>
+            </button>
+            <app-loader v-if="loading" />
+          </div>
         </td>
       </tr>
     </tbody>
@@ -97,7 +119,7 @@
             </svg>
           </download-excel>
         </td>
-        <td class="px-3 py-2 text-right bg-gray-100 dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700" colspan="4">
+        <td class="px-3 py-2 text-right bg-gray-100 dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700" colspan="5">
           <div class="flex justify-end mb-2">
             <span class="py-1 px-2 rounded-sm whitespace-nowrap">
               Cash: <span class="font-bold ml-1">{{ totalCash }} ₴</span>
@@ -130,21 +152,21 @@ export default {
   data: () => ({
     info: {},
     dataHeader: [],
-    dataFooter: []
+    dataFooter: [],
+    loading: false
   }),
   computed: {
     totalCash() {
-      return this.totalItems
-        .filter(el => !el.byCard)
-        .reduce((acc, cur) => acc + +cur.count * +cur.price, 0) || 0
+      return this.calculator(this.totalItems, false)
     },
     totalCard() {
-      return this.totalItems
-        .filter(el => el.byCard)
-        .reduce((acc, cur) => acc + +cur.count * +cur.price, 0) || 0
+      return this.calculator(this.totalItems, true)
     },
     total() {
       return this.totalCash + this.totalCard
+    },
+    session() {
+      return this.$store.getters.session
     },
     isSession() {
       return Object.keys(this.$store.getters.session).length > 0
@@ -163,6 +185,11 @@ export default {
     }
   },
   methods: {
+    calculator(data, payment) {
+      return data
+        .filter(el => payment ? el.byCard : !el.byCard)
+        .reduce((acc, cur) => acc + +cur.count * +cur.price, 0) || 0
+    },
     async fetchSessionInfo() {
       return (await this.$store.dispatch('fetchSessionById', {
         id: this.$route.params.id
@@ -214,6 +241,23 @@ export default {
       ]
 
       return ordersData
+    },
+    async removeHandler(id) {
+      const res = await this.$dialog.confirm({
+        title: 'Удалить заказ?',
+        icon: 'info',
+        cancelButtonText: 'Отмена'
+      })
+      if (res.isOk) {
+        this.loading = true
+        await this.$store.dispatch('removeOrder', {
+          id,
+          sid: this.session.id
+        })
+        this.$emit('removed', id)
+        this.loading = false
+        this.$toast.success('Заказ был удалён')
+      }
     }
   },
   async mounted() {

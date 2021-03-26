@@ -25,12 +25,12 @@
               <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
             </svg>
           </router-link>
-          <button type="button" class="btn btn-green" v-if="!isSession" @click="startHandler" title="Начать смену">
+          <button type="button" class="btn btn-green" v-if="!isSession" @click="startHandler" title="Открыть смену">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
               <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
             </svg>
           </button>
-          <button type="button" class="btn btn-red" v-else-if="isOwnSession" @click="stopHandler" title="Закончить смену">
+          <button type="button" class="btn btn-red" v-else-if="isSessionOwn" @click="stopHandler" title="Закрыть смену">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
               <path d="M5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5A1.5 1.5 0 0 1 5 3.5z"/>
             </svg>
@@ -78,7 +78,7 @@ export default {
     session() {
       return this.$store.getters.session
     },
-    isOwnSession() {
+    isSessionOwn() {
       return this.$store.getters.info.uid === this.$store.getters.session.uid
     },
     theme() {
@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     async logout() {
-      if (this.isSession && this.isOwnSession) {
+      if (this.isSession && this.isSessionOwn) {
         this.$toast.default('Сначала закройте смену')
       } else {
         const res = await this.$dialog.confirm({
@@ -104,7 +104,7 @@ export default {
     async startHandler() {
       const res = await this.$dialog.prompt({
         title: 'Открыть смену?',
-        inputPlaceholder: 'Введите название мероприятия',
+        inputPlaceholder: 'Введите название мероприятия (необязательно)',
         icon: 'info',
         cancelButtonText: 'Отмена'
       })

@@ -1,20 +1,22 @@
+import Vue from 'vue'
 import firebase from 'firebase/app'
 
 export default {
   state: {
-    session: {},
-    orders: []
+    session: {}
   },
   mutations: {
     setSession(state, session) {
       state.session = session
     },
-    addOrder(state, order) {
-      state.orders.push(order)
-    },
     clearSession(state) {
       state.session = {}
-      state.orders = []
+    },
+    addOrder(state, { key, order }) {
+      Vue.set(state.session.orders, key, order)
+    },
+    removeOrder(state, id) {
+      Vue.delete(state.session.orders, id)
     }
   },
   actions: {
@@ -70,7 +72,16 @@ export default {
         const options = { id, category, label, price, count, time, byCard }
         const key = (await firebase.database().ref(`/sessions/active/${sid}/orders`).push(options)).key
         const order = (await firebase.database().ref(`/sessions/active/${sid}/orders/${key}`).once('value')).val()
-        commit('addOrder', order)
+        commit('addOrder', { key, order })
+      } catch (e) {
+        commit('setError', e)
+        throw e
+      }
+    },
+    async removeOrder({ commit }, { id, sid }) {
+      try {
+        await firebase.database().ref(`/sessions/active/${sid}/orders`).child(id).remove()
+        commit('removeOrder', id)
       } catch (e) {
         commit('setError', e)
         throw e
@@ -106,7 +117,6 @@ export default {
     }
   },
   getters: {
-    session: s => s.session,
-    orders: s => s.orders
+    session: s => s.session
   }
 }

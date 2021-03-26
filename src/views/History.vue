@@ -10,24 +10,23 @@
         <table class="min-w-full shadow-sm border border-gray-200 dark:border-gray-700 mb-4 text-sm">
           <thead>
             <tr>
-              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-10">
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 w-10">
                 №
               </th>
-              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-48">
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 w-48">
                 Открыта
               </th>
-              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                 Мероприятие
               </th>
-              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-28">
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 w-32">
                 Открыл
               </th>
-              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-28">
-                Действия
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 w-12">
               </th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+          <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
             <history-row v-for="item in items" :key="item.id" :item="item" />
           </tbody>
         </table>
