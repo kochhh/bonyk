@@ -20,7 +20,10 @@
         <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 w-20">
           Всего
         </th>
-        <th class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 w-12">
+        <th
+          class="px-3 py-2 font-semibold text-right bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 w-20"
+          v-if="isSession && isSessionOwn"
+        >
         </th>
       </tr>
     </thead>
@@ -65,28 +68,34 @@
         <td
           class="px-3 py-2 whitespace-nowrap align-top"
           :class="{ 'bg-gray-200 dark:bg-gray-700': item.byCard }"
+          v-if="isSession && isSessionOwn"
         >
-          <div class="flex items-center">
-            <button
-              type="button"
-              class="btn btn-red py-1 px-2 shadow-none"
-              @click="removeHandler(item.id)"
-              title="Удалить заказ"
-              v-if="isSession && isSessionOwn"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-              </svg>
-            </button>
-            <app-loader v-if="loading" />
+          <div class="flex items-center space-x-2">
+            <order-edit :item="item" v-on="$listeners" />
+            <div>
+              <button
+                type="button"
+                class="btn btn-red py-1 px-2 shadow-none"
+                @click="removeHandler(item.id)"
+                title="Удалить заказ"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                </svg>
+              </button>
+              <app-loader v-if="loading" />
+            </div>
           </div>
         </td>
       </tr>
     </tbody>
     <tfoot>
       <tr>
-        <td class="px-3 py-2 bg-gray-100 dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700 align-bottom" colspan="2">
+        <td
+          class="px-3 py-2 bg-gray-100 dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700 align-bottom"
+          colspan="2"
+        >
           <download-excel
             class="inline-block text-gray-400 hover:text-gray-500 transition-colors cursor-pointer"
             tabindex="0"
@@ -119,7 +128,10 @@
             </svg>
           </download-excel>
         </td>
-        <td class="px-3 py-2 text-right bg-gray-100 dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700" colspan="5">
+        <td
+          class="px-3 py-2 text-right bg-gray-100 dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700"
+          :colspan="isSession && isSessionOwn ? 5 : 4"
+        >
           <div class="flex justify-end mb-2">
             <span class="py-1 px-2 rounded-sm whitespace-nowrap">
               Cash: <span class="font-bold ml-1">{{ totalCash }} ₴</span>
@@ -138,7 +150,12 @@
 </template>
 
 <script>
+import OrderEdit from './OrderEdit.vue'
+
 export default {
+  components: {
+    OrderEdit
+  },
   props: {
     items: {
       type: Array,
@@ -254,8 +271,8 @@ export default {
       if (res.isOk) {
         this.loading = true
         await this.$store.dispatch('removeOrder', {
-          id,
-          sid: this.session.id
+          sid: this.session.id,
+          id
         })
         this.$emit('removed', id)
         this.loading = false

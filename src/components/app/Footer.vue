@@ -12,7 +12,7 @@
         </div>
         <moneyflow v-if="isSession && isSessionOwn" />
         <div class="flex items-center space-x-2 md:space-x-4 ml-auto">
-          <div
+          <!-- <div
             class="flex items-center space-x-1 bg-green-500 text-white py-0.5 pl-1.5 pr-2 rounded-sm text-sm"
             v-if="isSession"
           >
@@ -22,7 +22,7 @@
             <span class="font-semibold">
               {{ session.timestart | date('time') }}
             </span>
-          </div>
+          </div> -->
           <button type="button" class="btn btn-green" v-if="!isSession" @click="startHandler" title="Открыть смену">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
               <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>

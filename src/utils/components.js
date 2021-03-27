@@ -424,7 +424,7 @@ const settings = {
       classes: {
         overlay: 'bg-black',
         wrapper: '',
-        modal: 'bg-white dark:bg-gray-900 shadow',
+        modal: 'bg-white dark:bg-gray-900 shadow whitespace-normal',
         body: '',
         header: 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 font-semibold',
         footer: 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600',
@@ -469,7 +469,7 @@ const settings = {
       classes: {
         overlay: 'bg-black',
         wrapper: '',
-        modal: 'bg-white dark:bg-gray-800 shadow',
+        modal: 'bg-white dark:bg-gray-800 shadow whitespace-normal',
         body: '',
         header: 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 font-semibold',
         footer: 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600',

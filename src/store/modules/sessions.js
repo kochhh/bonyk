@@ -74,9 +74,9 @@ export default {
         throw e
       }
     },
-    async addOrder({ commit }, { sid, id, category, label, price, count, time, byCard }) {
+    async addOrder({ commit }, { sid, id, category, label, price, count, time, byCard, isCustom }) {
       try {
-        const options = { id, category, label, price, count, time, byCard }
+        const options = { id, category, label, price, count, time, byCard, isCustom }
         const key = (await firebase.database().ref(`/sessions/active/${sid}/orders`).push(options)).key
         const order = (await firebase.database().ref(`/sessions/active/${sid}/orders/${key}`).once('value')).val()
         commit('addOrder', { key, order })
@@ -85,10 +85,21 @@ export default {
         throw e
       }
     },
-    async removeOrder({ commit }, { id, sid }) {
+    async removeOrder({ commit }, { sid, id }) {
       try {
         await firebase.database().ref(`/sessions/active/${sid}/orders`).child(id).remove()
         commit('removeOrder', id)
+      } catch (e) {
+        commit('setError', e)
+        throw e
+      }
+    },
+    async editOrder({ commit }, { sid, id, count, price, byCard }) {
+      try {
+        await firebase.database().ref(`/sessions/active/${sid}/orders`).child(id).update({ count, price, byCard })
+        const order = (await firebase.database().ref(`/sessions/active/${sid}/orders`).child(id).once('value')).val()
+        const key = id
+        commit('addOrder', { key, order })
       } catch (e) {
         commit('setError', e)
         throw e

@@ -1,32 +1,25 @@
 <template>
-  <div class="w-28 h-28 md:w-40 md:h-36 ml-2 mt-2">
+  <div>
     <button
       type="button"
-      class="w-full h-full py-4 px-2 md:px-4 flex flex-col items-center border focus:outline-none focus:ring rounded-sm font-semibold text-center"
-      :class="{
-        'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700': !item.isCustom,
-        'bg-gray-200 dark:bg-gray-700 border-gray-300 dark:border-gray-600': item.isCustom
-      }"
+      class="btn btn-green py-1 px-2 shadow-none"
       @click="clickHandler"
+      title="Корректировать заказ"
     >
-      <div class="w-full flex-shrink-0 text-2xl md:text-3xl leading-7" v-if="!item.isCustom">
-        {{ item.price }}
-      </div>
-      <div class="w-full flex-shrink-0 mt-auto leading-4 md:leading-5 text-sm md:text-base">
-        <div class="line-clamp-3">
-          {{ item.label }}
-        </div>
-      </div>
+      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+      </svg>
     </button>
+    <app-loader v-if="loading" />
     <t-modal-form
       v-model="showOrderModal"
       ref="orderModal"
       tabindex="-1"
     >
       <template v-slot:header>
-        {{ item.category }}: {{ item.label }}
+        Корректировать: {{ item.label }}
       </template>
-      <form @submit.prevent="addHandler">
+      <form @submit.prevent="submitHandler">
         <div class="py-12 px-4 text-center">
           <div class="relative">
             <numeric-input
@@ -71,7 +64,7 @@
               class="btn btn-green"
               :disabled="loading"
               :class="{ 'disabled:opacity-50 disabled:cursor-not-allowed': loading }"
-            >Добавить</button>
+            >Сохранить</button>
           </div>
         </div>
       </form>
@@ -98,38 +91,36 @@ export default {
     showOrderModal: false,
     count: 1,
     byCard: false,
-    date: new Date(),
-    interval: null,
     customPrice: null
   }),
   validations: {
     customPrice: { required, numeric }
   },
   computed: {
-    isSession() {
-      return Object.keys(this.$store.getters.session).length > 0
-    },
     session() {
       return this.$store.getters.session
     },
-    isSessionOwn() {
-      return this.$store.getters.info.uid === this.$store.getters.session.uid
-    },
-    timestamp() {
-      return this.date.getTime()
+    newData() {
+      if (this.item.isCustom) {
+        return {
+          count: this.count,
+          byCard: this.byCard,
+          customPrice: this.customPrice
+        }
+      }
+      return {
+        count: this.count,
+        byCard: this.byCard
+      }
     }
   },
   methods: {
     clickHandler() {
-      if (!this.isSession) {
-        this.$toast.default('Смена не открыта')
-      } else if (!this.isSessionOwn) {
-        this.$toast.default('Смена занята')
-      } else {
-        this.showOrderModal = true
-      }
+      this.showOrderModal = true
+      this.count = this.item.count
+      this.byCard = this.item.byCard
     },
-    async addHandler() {
+    async submitHandler() {
       if (this.item.isCustom && this.$v.$invalid) {
         this.$v.$touch()
         return
@@ -137,41 +128,29 @@ export default {
 
       try {
         this.loading = true
-        const { id, category, label } = this.item
-        const isCustom = this.item.isCustom ? true : false
-        await this.$store.dispatch('addOrder', {
+        const updates = {
+          price: this.item.isCustom ? this.newData.customPrice : this.item.price,
+          count: this.newData.count,
+          byCard: this.newData.byCard
+        }
+        await this.$store.dispatch('editOrder', {
           sid: this.session.id,
-          id,
-          category,
-          label,
-          price: isCustom ? this.customPrice : this.item.price,
-          count: this.count,
-          time: this.timestamp,
-          byCard: this.byCard,
-          isCustom
+          id: this.item.id,
+          ...updates
         })
         this.loading = false
-        this.count = 1
-        this.byCard = false
         if (this.item.isCustom) {
           this.customPrice = null
         }
         this.$v.$reset()
+        this.$emit('edited', this.item.id, updates)
         this.$refs.orderModal.hide()
-        this.$toast.success('Добавлено')
+        this.$toast.success('Заказ скорректирован')
       } catch (e) {}
     },
     onBeforeClose() {
       this.$v.$reset()
     }
-  },
-  mounted() {
-    this.interval = setInterval(() => {
-      this.date = new Date()
-    }, 1000)
-  },
-  beforeDestroy() {
-    clearInterval(this.interval)
   }
 }
 </script>

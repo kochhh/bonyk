@@ -10,7 +10,7 @@
     </div>
     <div v-else>
       <div class="w-full overflow-x-auto">
-        <session-table :items="items" :total-items="totalItems" @removed="removeOrder" />
+        <session-table :items="items" :total-items="totalItems" @removed="removeOrder" @edited="editOrder" />
       </div>
       <t-pagination
         v-if="pageCount > pageSize"
@@ -56,6 +56,16 @@ export default {
       this.items = this.items
         .filter(el => el.id !== id)
       this.totalItems = this.items
+    },
+    editOrder(id, updates) {
+      this.items.map(item => {
+        if (item.id === id) {
+          item.byCard = updates.byCard
+          item.count = updates.count
+          item.price = updates.price
+        }
+        return item
+      })
     }
   },
   watch: {
