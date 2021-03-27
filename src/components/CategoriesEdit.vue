@@ -15,6 +15,9 @@
       header="Редактировать категории"
       ref="modalCategoriesEdit"
     >
+      <div class="mb-4 text-xs text-gray-400">
+        Можно сортировать и удалять
+      </div>
       <draggable
         :list="list"
         animation="200"

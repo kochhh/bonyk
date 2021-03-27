@@ -22,6 +22,9 @@ export default {
   actions: {
     async createSession({ dispatch, commit }, { timestart, event }) {
       try {
+        const exists = (await firebase.database().ref(`/sessions/active`).once('value')).exists()
+        if (exists) return
+
         const uid = await dispatch('getUserId')
         const name = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val().name
         const key = (await firebase.database().ref(`/sessions/active`).push({ timestart, event, name, uid })).key
@@ -34,9 +37,10 @@ export default {
     },
     async getActiveSession({ commit }) {
       try {
-        const sessions = (await firebase.database().ref(`/sessions/active`).once('value')).val()
-        if (!sessions) return
-        const info = Object.keys(sessions).map(key => ({ ...sessions[key], id: key }))[0]
+        const session = (await firebase.database().ref(`/sessions/active`).once('value')).val()
+        if (!session) return
+
+        const info = Object.keys(session).map(key => ({ ...session[key], id: key }))[0]
         commit('setSession', info)
       } catch (e) {
         commit('setError', e)
@@ -45,6 +49,9 @@ export default {
     },
     async resumeSession({ commit }, sid) {
       try {
+        const exists = (await firebase.database().ref(`/sessions/active`).once('value')).exists()
+        if (exists) return
+
         const session = (await firebase.database().ref(`/sessions/history/${sid}`).once('value')).val() || {}
         const key = (await firebase.database().ref(`/sessions/active`).push(session)).key
         await firebase.database().ref(`/sessions/active/${key}/timeend`).remove()

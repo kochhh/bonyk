@@ -2,6 +2,12 @@
   <div>
     <button-back />
     <app-loader v-if="loading" />
+    <div v-else-if="!items" class="text-center">
+      Такой категории не существует.<br>
+      <router-link :to="'/edit'" class="link">
+        Создать новую
+      </router-link>
+    </div>
     <div v-else-if="!items.length" class="text-center">
       Здесь пока пусто.<br>
       <router-link :to="'/edit'" class="link">
@@ -30,12 +36,12 @@ export default {
   },
   data: () => ({
     loading: true,
-    catId: null,
+    cid: null,
     items: []
   }),
   async mounted() {
-    this.catId = this.$route.params.catId
-    this.items = await this.$store.dispatch('fetchItems', this.catId)
+    this.cid = this.$route.params.cid
+    this.items = await this.$store.dispatch('fetchItems', this.cid) || null
     this.loading = false
   }
 }

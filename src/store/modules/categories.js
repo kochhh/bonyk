@@ -41,49 +41,55 @@ export default {
         throw e
       }
     },
-    async createItem({ commit }, { catId, label, price, enabled, isCustom }) {
+    async createItem({ commit }, { cid, label, price, enabled, isCustom }) {
       try {
         const itemData = { label, price, enabled, isCustom }
-        const key = (await firebase.database().ref(`/categories/${catId}`).child('items').push()).key
+        const key = (await firebase.database().ref(`/categories/${cid}`).child('items').push()).key
         const updates = {}
 
         updates[`/items/${key}`] = itemData
-        await firebase.database().ref(`/categories/${catId}`).update(updates)
+        await firebase.database().ref(`/categories/${cid}`).update(updates)
         return { label, price, enabled, isCustom, id: key }
       } catch (e) {
         commit('setError', e)
         throw e
       }
     },
-    async fetchItems({ commit }, catId) {
+    async fetchItems({ commit }, cid) {
       try {
-        const items = (await firebase.database().ref(`/categories/${catId}/items`).once('value')).val() || {}
-        const category = (await firebase.database().ref(`/categories/${catId}`).once('value')).val().label || ''
-        return Object.keys(items).map(key => ({ ...items[key], id: key, category }))
+        const items = (await firebase.database().ref(`/categories/${cid}/items`).once('value')).val() || {}
+        const category = (await firebase.database().ref(`/categories/${cid}`).once('value')).val() || ''
+        if (!category) return
+
+        return Object.keys(items).map(key => ({
+          ...items[key],
+          id: key,
+          category: category.label
+        }))
       } catch (e) {
         commit('setError', e)
         throw e
       }
     },
-    async updateEnabledItems({ commit }, { id, enabled, catId }) {
+    async updateEnabledItems({ commit }, { id, enabled, cid }) {
       try {
-        await firebase.database().ref(`/categories/${catId}/items`).child(id).update({ enabled })
+        await firebase.database().ref(`/categories/${cid}/items`).child(id).update({ enabled })
       } catch (e) {
         commit('setError', e)
         throw e
       }
     },
-    async updateItem({ commit }, { id, label, price, catId }) {
+    async updateItem({ commit }, { id, label, price, cid }) {
       try {
-        await firebase.database().ref(`/categories/${catId}/items`).child(id).update({ label, price })
+        await firebase.database().ref(`/categories/${cid}/items`).child(id).update({ label, price })
       } catch (e) {
         commit('setError', e)
         throw e
       }
     },
-    async removeItem({ commit }, { id, catId }) {
+    async removeItem({ commit }, { id, cid }) {
       try {
-        await firebase.database().ref(`/categories/${catId}/items`).child(id).remove()
+        await firebase.database().ref(`/categories/${cid}/items`).child(id).remove()
       } catch (e) {
         commit('setError', e)
         throw e

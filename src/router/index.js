@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import firebase from 'firebase/app'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -28,17 +29,17 @@ const router = new VueRouter({
       path: '/',
       name: 'Home',
       meta: {
-        requiresAuth: true,
-        layout: 'main'
+        layout: 'main',
+        requiresAuth: true
       },
       component: () => import('@/views/Home.vue')
     },
     {
-      path: '/category/:catId',
+      path: '/category/:cid',
       name: 'Category',
       meta: {
-        requiresAuth: true,
-        layout: 'main'
+        layout: 'main',
+        requiresAuth: true
       },
       component: () => import('@/views/Category.vue')
     },
@@ -46,8 +47,8 @@ const router = new VueRouter({
       path: '/edit',
       name: 'Edit',
       meta: {
-        requiresAuth: true,
-        layout: 'main'
+        layout: 'main',
+        requiresAuth: true
       },
       component: () => import('@/views/Edit.vue')
     },
@@ -55,8 +56,8 @@ const router = new VueRouter({
       path: '/history',
       name: 'History',
       meta: {
-        requiresAuth: true,
-        layout: 'main'
+        layout: 'main',
+        requiresAuth: true
       },
       component: () => import('@/views/History.vue')
     },
@@ -64,8 +65,8 @@ const router = new VueRouter({
       path: '/history/:id',
       name: 'Session',
       meta: {
-        requiresAuth: true,
-        layout: 'main'
+        layout: 'main',
+        requiresAuth: true
       },
       component: () => import('@/views/Session.vue')
     },
@@ -73,11 +74,23 @@ const router = new VueRouter({
       path: '/active',
       name: 'Active',
       meta: {
-        requiresAuth: true,
-        layout: 'main'
+        layout: 'main',
+        requiresAuth: true
       },
-      component: () => import('@/views/Active.vue')
+      component: () => import('@/views/Active.vue'),
+      beforeEnter: (to, from, next) => {
+        if (!Object.keys(store.getters.session).length > 0) next('/')
+        else next()
+      }
     },
+    {
+      path: '*',
+      name: '404',
+      meta: {
+        layout: 'empty'
+      },
+      component: () => import('@/views/404.vue')
+    }
   ]
 })
 
@@ -85,11 +98,8 @@ router.beforeEach((to, from, next) => {
   const loggedIn = firebase.auth().currentUser
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
 
-  if (!loggedIn && requiresAuth) {
-    next('/login')
-  } else {
-    next()
-  }
+  if (!loggedIn && requiresAuth) next('/login')
+  else next()
 })
 
 export default router

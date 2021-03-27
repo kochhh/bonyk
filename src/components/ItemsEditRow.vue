@@ -85,7 +85,7 @@ export default {
         await this.$store.dispatch('updateEnabledItems', {
           id: this.item.id,
           enabled: this.$refs[this.item.id].checked,
-          catId: this.category
+          cid: this.category
         })
         this.$toast.success('Список позиций обновлён')
       } catch(e) {}
@@ -103,7 +103,7 @@ export default {
         try {
           await this.$store.dispatch('removeItem', {
             id: this.item.id,
-            catId: this.category
+            cid: this.category
           })
           this.$emit('removed', this.item.id)
           this.editing = false
@@ -117,7 +117,7 @@ export default {
           id: this.item.id,
           label: this.item.label,
           price: this.item.isCustom ? 0 : this.item.price,
-          catId: this.category
+          cid: this.category
         })
         this.$toast.success('Позиция обновлена')
         this.editing = false

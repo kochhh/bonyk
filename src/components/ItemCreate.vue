@@ -115,7 +115,7 @@ export default {
       try {
         this.loading = true
         const item = await this.$store.dispatch('createItem', {
-          catId: this.category,
+          cid: this.category,
           label: this.label,
           price: this.price,
           enabled: this.enabled,
