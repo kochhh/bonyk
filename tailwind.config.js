@@ -16,13 +16,6 @@ module.exports = {
   },
   darkMode: 'class', // or 'media' or 'class'
   theme: {
-    colors: {
-      ...colors,
-      gray: colors.trueGray,
-      green: colors.emerald,
-      transparent: 'transparent',
-      current: 'currentColor'
-    },
     screens: {
       'sm': '576px',
       'md': '768px',
@@ -34,6 +27,25 @@ module.exports = {
         DEFAULT: '1rem',
         sm: '2rem'
       }
+    },
+    colors: {
+      ...colors,
+      gray: colors.trueGray,
+      green: colors.emerald,
+      lime: colors.lime,
+      transparent: 'transparent',
+      current: 'currentColor'
+    },
+    boxShadow: {
+      sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+      DEFAULT: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+      md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+      lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+      '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+      inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+      inset: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.4)',
+      none: 'none'
     }
   },
   variants: {
@@ -46,8 +58,8 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/forms'),
-    require('@tailwindcss/line-clamp'),
-    require('tailwindcss-hyphens'),
+    // require('@tailwindcss/line-clamp'),
+    // require('tailwindcss-hyphens'),
 
     // plugin for individual border color
     ({ addUtilities, e, theme, variants }) => {

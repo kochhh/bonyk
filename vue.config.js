@@ -1,5 +1,9 @@
 module.exports = {
   pwa: {
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      swSrc: 'public/service-worker.js'
+    },
     name: 'Bonyk',
     themeColor: '#10b981',
     msTileColor: '#4c4c4c',

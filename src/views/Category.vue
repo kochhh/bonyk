@@ -40,9 +40,11 @@ export default {
     items: []
   }),
   async mounted() {
-    this.cid = this.$route.params.cid
-    this.items = await this.$store.dispatch('fetchItems', this.cid) || null
-    this.loading = false
+    try {
+      this.cid = this.$route.params.cid
+      this.items = await this.$store.dispatch('fetchItems', this.cid) || null
+      this.loading = false
+    } catch (e) {}
   }
 }
 </script>

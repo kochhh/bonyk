@@ -35,6 +35,15 @@ const router = new VueRouter({
       component: () => import('@/views/Home.vue')
     },
     {
+      path: '/recent',
+      name: 'Recent',
+      meta: {
+        layout: 'main',
+        requiresAuth: true
+      },
+      component: () => import('@/views/Recent.vue')
+    },
+    {
       path: '/category/:cid',
       name: 'Category',
       meta: {

@@ -2,20 +2,25 @@
   <div class="w-28 h-28 md:w-40 md:h-36 ml-2 mt-2">
     <button
       type="button"
-      class="w-full h-full py-4 px-2 md:px-4 flex flex-col items-center border focus:outline-none focus:ring rounded-sm font-semibold text-center"
-      :class="{
-        'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700': !item.isCustom,
-        'bg-gray-200 dark:bg-gray-700 border-gray-300 dark:border-gray-600': item.isCustom
-      }"
+      class="w-full h-full py-3 md:py-4 px-2 md:px-3 flex items-center justify-center bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring rounded-sm text-center relative"
       @click="clickHandler"
     >
-      <div class="w-full flex-shrink-0 text-2xl md:text-3xl leading-7" v-if="!item.isCustom">
-        {{ item.price }}
-      </div>
-      <div class="w-full flex-shrink-0 mt-auto leading-4 md:leading-5 text-sm md:text-base">
-        <div class="line-clamp-3">
+      <div class="w-full text-sm md:text-lg leading-4 md:leading-6 font-semibold">
+        <div class="overflow-ellipsis overflow-hidden">
           {{ item.label }}
         </div>
+      </div>
+      <div
+        class="absolute -top-px -right-px z-10 rounded-tr-sm bg-pink-500 text-white text-xs uppercase py-0.5 px-1.5 font-semibold"
+        v-if="item.isCustom"
+      >
+        custom
+      </div>
+      <div
+        class="absolute -top-px -right-px z-10 rounded-tr-sm bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 md:text-xl uppercase py-1 px-2 font-mono font-semibold"
+        v-else
+      >
+        {{ item.price }}
       </div>
     </button>
     <t-modal-form

@@ -94,6 +94,13 @@ export default {
         commit('setError', e)
         throw e
       }
+    },
+    async fetchRecent({ commit }) {
+      try {
+      } catch (e) {
+        commit('setError', e)
+        throw e
+      }
     }
   }
 }
