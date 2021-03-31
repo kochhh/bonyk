@@ -10,7 +10,7 @@
     </div>
     <div v-else-if="!items.length" class="text-center">
       Здесь пока пусто.<br>
-      <router-link :to="'/edit'" class="link">
+      <router-link :to="{ name: 'Edit', query: { cid: this.$route.params.cid }}" class="link">
         Создайте новую позицию
       </router-link>
     </div>

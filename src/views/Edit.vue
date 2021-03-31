@@ -84,15 +84,15 @@ export default {
   data: () => ({
     categories: [],
     categoriesLoading: true,
-    category: null,
     isCategorySelected: false,
+    category: null,
     items: [],
     itemsLoading: false,
     isCustom: false
   }),
   methods: {
-    addNewCategory(category) {
-      this.categories.push(category)
+    addNewCategory(item) {
+      this.categories.push(item)
     },
     removeCategory(id) {
       this.categories = this.categories.filter(el => el.id !== id)
@@ -114,6 +114,10 @@ export default {
   },
   async mounted() {
     try {
+      if (this.$route.query.cid) {
+        this.category = this.$route.query.cid
+        this.selectHandler()
+      }
       this.categories = (await this.$store.dispatch('fetchCategories'))
         .sort((a, b) => a.order - b.order)
       this.categoriesLoading = false

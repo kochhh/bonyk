@@ -2,7 +2,7 @@
   <div>
     <h1 class="mb-6">История смен</h1>
     <app-loader v-if="loading" />
-    <div v-else-if="!sessions">
+    <div v-else-if="sessions.length < 1">
       Здесь пока пусто.
     </div>
     <div v-else>
