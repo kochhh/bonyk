@@ -35,24 +35,16 @@ Vue.filter('currency', currencyFilter)
 Vue.component('AppLoader', AppLoader)
 Vue.component('downloadExcel', JsonExcel)
 
-const fbOptions = {
-  apiKey: "AIzaSyDXQmYKZKHM2RTj5yoR0EsBVdRWe3G5rSE",
+firebase.initializeApp({
+  apiKey: process.env.VUE_APP_API_KEY,
+  databaseURL: process.env.VUE_APP_DATABASE_URL,
   authDomain: "bonyk-crm.firebaseapp.com",
   projectId: "bonyk-crm",
   storageBucket: "bonyk-crm.appspot.com",
   messagingSenderId: "32192854639",
   appId: "1:32192854639:web:7d736b6c9d5e8fc82d2b9a",
   measurementId: "G-NQRQKRCLZ8"
-}
-
-if (process.env.NODE_ENV === "production") {
-  firebase.initializeApp({
-    databaseURL: "https://bonyk-work.firebaseio.com",
-    ...fbOptions
-  })
-} else {
-  firebase.initializeApp(fbOptions)
-}
+})
 
 let app
 
