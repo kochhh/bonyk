@@ -59,13 +59,14 @@ export default {
       try {
         const items = (await firebase.database().ref(`/categories/${cid}/items`).once('value')).val() || {}
         const category = (await firebase.database().ref(`/categories/${cid}`).once('value')).val() || ''
+
         if (!category) return
 
         return Object.keys(items).map(key => ({
           ...items[key],
           id: key,
           category: category.label
-        }))
+        })).filter(el => el.enabled)
       } catch (e) {
         commit('setError', e)
         throw e
