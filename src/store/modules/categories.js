@@ -66,7 +66,7 @@ export default {
           ...items[key],
           id: key,
           category: category.label
-        })).filter(el => el.enabled)
+        }))
       } catch (e) {
         commit('setError', e)
         throw e

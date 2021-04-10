@@ -42,7 +42,7 @@ export default {
   async mounted() {
     try {
       this.cid = this.$route.params.cid
-      this.items = await this.$store.dispatch('fetchItems', this.cid) || null
+      this.items = (await this.$store.dispatch('fetchItems', this.cid)).filter(el => el.enabled) || null
       this.loading = false
     } catch (e) {}
   }
