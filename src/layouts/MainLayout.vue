@@ -26,12 +26,12 @@ import AppFooter from '@/components/app/Footer'
 import messages from '@/utils/messages'
 
 export default {
-  data: () => ({
-    loading: true
-  }),
   components: {
     AppNavbar, AppFooter
   },
+  data: () => ({
+    loading: true
+  }),
   computed: {
     error() {
       return this.$store.getters.error

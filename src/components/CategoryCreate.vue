@@ -76,15 +76,13 @@
 import { required } from 'vuelidate/lib/validators'
 
 export default {
-  data() {
-    return {
-      loading: false,
-      showModal: false,
-      name: '',
-      label: '',
-      names: ['beer', 'long', 'shot', 'strong', 'vodka', 'tequila', 'whiskey', 'cognac', 'wine', 'hot', 'cold', 'coffee', 'food']
-    }
-  },
+  data: () => ({
+    loading: false,
+    showModal: false,
+    name: '',
+    label: '',
+    names: ['beer', 'long', 'shot', 'strong', 'vodka', 'tequila', 'whiskey', 'cognac', 'wine', 'hot', 'cold', 'coffee', 'food']
+  }),
   validations: {
     name: { required }
   },

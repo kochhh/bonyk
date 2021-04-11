@@ -2,7 +2,7 @@
   <div>
     <div class="mb-6 flex items-baseline">
       <h1>Рабочая смена</h1>
-      <div class="ml-4 text-xs text-gray-400">started by <span class="font-semibold">{{ session.name }}</span></div>
+      <div class="ml-4 text-xs text-gray-400">открыта: <span class="font-semibold">{{ session.name }}</span></div>
     </div>
     <app-loader v-if="loading" />
     <div v-else-if="!items">

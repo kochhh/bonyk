@@ -64,4 +64,12 @@
   .link {
     @apply text-blue-500 underline hover:text-blue-700 transition-colors;
   }
+
+  .category-button {
+    @apply w-28 md:w-40 h-28 md:h-36 ml-2 mt-2 py-2 px-2 md:px-4 flex flex-col justify-center items-center bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring rounded-sm font-semibold text-center;
+  }
+
+  .item-button {
+    @apply w-full h-full py-3 md:py-4 px-2 md:px-3 flex items-center justify-center bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring rounded-sm text-center relative;
+  }
 }

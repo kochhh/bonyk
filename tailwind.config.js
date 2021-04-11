@@ -12,7 +12,7 @@ module.exports = {
   darkMode: 'class',
   theme: {
     screens: {
-      'sm': '576px',
+      'sm': '540px',
       'md': '768px',
       'lg': '992px'
     },
@@ -23,13 +23,12 @@ module.exports = {
         sm: '2rem'
       }
     },
-    colors: {
-      ...colors,
-      gray: colors.trueGray,
-      green: colors.emerald,
-      lime: colors.lime,
-      transparent: 'transparent',
-      current: 'currentColor'
+    extend: {
+      colors: {
+        gray: colors.trueGray,
+        green: colors.emerald,
+        lime: colors.lime
+      }
     }
   },
   variants: {

@@ -2,7 +2,7 @@
   <div class="w-28 h-28 md:w-40 md:h-36 ml-2 mt-2">
     <button
       type="button"
-      class="w-full h-full py-3 md:py-4 px-2 md:px-3 flex items-center justify-center bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring rounded-sm text-center relative"
+      class="item-button"
       @click="clickHandler"
     >
       <div class="w-full text-sm md:text-lg leading-4 md:leading-6 font-semibold">

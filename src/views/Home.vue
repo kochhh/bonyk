@@ -33,8 +33,7 @@ export default {
   }),
   async mounted() {
     try {
-      this.categories = (await this.$store.dispatch('fetchCategories'))
-        .sort((a, b) => a.order - b.order)
+      this.categories = (await this.$store.dispatch('fetchCategories')).sort((a, b) => a.order - b.order)
       this.loading = false
     } catch (e) {}
 

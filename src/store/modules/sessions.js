@@ -29,7 +29,7 @@ export default {
         const name = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val().name
         const key = (await firebase.database().ref(`/sessions/active`).push({ timestart, event, name, uid })).key
         const info = (await firebase.database().ref(`/sessions/active/${key}`).once('value')).val() || {}
-        commit('setSession', { ...info, id: key })
+        commit('setSession', { ...info, id: key, orders: [] })
       } catch (e) {
         commit('setError', e)
         throw e

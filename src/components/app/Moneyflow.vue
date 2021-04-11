@@ -18,21 +18,18 @@
 export default {
   name: 'Moneyflow',
   computed: {
-    orders() {
-      return this.$store.getters.session.orders
-    },
     cash() {
-      return this.calculator(this.orders, false)
+      return this.calculator(this.$store.getters.session.orders, false)
     },
     card() {
-      return this.calculator(this.orders, true)
+      return this.calculator(this.$store.getters.session.orders, true)
     }
   },
   methods: {
-    calculator(data, payment) {
-      return data && Object.keys(data).length > 0 ?
-        Object.keys(data)
-          .map(key => ({...data[key]}))
+    calculator(orders, payment) {
+      return orders && Object.keys(orders).length > 0 ?
+        Object.keys(orders)
+          .map(key => ({...orders[key]}))
           .filter(el => payment ? el.byCard : !el.byCard)
           .reduce((acc, cur) => acc + +cur.count * +cur.price, 0) : 0
     }
