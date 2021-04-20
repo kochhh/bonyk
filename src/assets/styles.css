@@ -8,13 +8,13 @@ html {
   }
 }
 
-@media (min-width: 768px) {
+@screen md {
   html {
     font-size: 16px;
   }
 }
 
-@media (min-width: 992px) {
+@screen lg {
   html {
     font-size: 21px;
   }
@@ -24,7 +24,7 @@ html {
   padding: 4rem 1rem;
 }
 
-@media (min-width: 768px) {
+@screen md {
   .v-toast {
     padding: 4.5rem 1rem;
   }

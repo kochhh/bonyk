@@ -15,11 +15,12 @@
       v-model="showItemCreate"
       header="Создать новую позицию"
       ref="modalItemCreate"
+      tabindex="-1"
       @opened="onOpened"
       @before-close="onBeforeClose"
     >
       <form @submit.prevent="submitHandler">
-        <div class="py-8 px-4">
+        <div class="py-6 px-4">
           <div class="flex space-x-2">
             <div class="flex-grow">
               <input

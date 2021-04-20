@@ -210,11 +210,6 @@ export default {
         .filter(el => payment ? el.byCard : !el.byCard)
         .reduce((acc, cur) => acc + +cur.count * +cur.price, 0) || 0
     },
-    async fetchSessionInfo() {
-      return (await this.$store.dispatch('fetchSessionById', {
-        id: this.$route.params.id
-      }))
-    },
     getFormattedTime() {
       const date = new Date(+this.info.timestart)
       const year = date.getFullYear()
@@ -230,19 +225,17 @@ export default {
       })
 
       const ordersData = orders.map((item, index) => {
-        const container = {}
         const { category, label, price, count, byCard, time } = item
-
-        container.number = index + 1
-        container.category = category
-        container.label = label
-        container.price = `${price} ₴`
-        container.count = count
-        container.cost = `${price * count} ₴`
-        container.byCard = byCard ? 'Карта' : 'Наличные'
-        container.time = this.$options.filters.date(time, 'datetime')
-
-        return container
+        return {
+          number: index + 1,
+          category: category,
+          label: label,
+          price: `${price} ₴`,
+          count: count,
+          cost: `${price * count} ₴`,
+          byCard: byCard ? 'Карта' : 'Наличные',
+          time: this.$options.filters.date(time, 'datetime')
+        }
       })
 
       this.dataHeader = [
@@ -281,7 +274,9 @@ export default {
     }
   },
   async mounted() {
-    this.info = await this.fetchSessionInfo()
+    this.info = (await this.$store.dispatch('fetchSessionById', {
+        id: this.$route.params.id
+      }))
   }
 }
 </script>

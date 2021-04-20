@@ -2,6 +2,14 @@
   <div>
     <button-back />
     <h1 class="mb-6">Заказы по смене</h1>
+    <div class="mb-6">
+      <p class="mb-1 text-xs">
+        <span class="text-gray-500 dark:text-gray-400">Открыта:</span> <strong class="font-semibold">{{ session.name }}</strong>
+      </p>
+      <p class="mb-1 text-xs">
+        <span class="text-gray-500 dark:text-gray-400">Мероприятие:</span> <strong class="font-semibold">{{ session.event }}</strong>
+      </p>
+    </div>
     <app-loader v-if="loading" />
     <div v-else-if="!items">
       Заказов в данной смене не было.
@@ -41,7 +49,8 @@ export default {
     paginationMixin
   ],
   data: () => ({
-    loading: false,
+    loading: true,
+    session: {},
     items: [],
     totalItems: []
   }),
@@ -53,7 +62,9 @@ export default {
     }
   },
   async mounted() {
-    this.loading = true
+    this.session = (await this.$store.dispatch('fetchSessionById', {
+        id: this.$route.params.id
+      }))
     this.items = (await this.$store.dispatch('fetchOrders', {
         id: this.$route.params.id
       }))

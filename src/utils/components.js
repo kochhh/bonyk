@@ -416,7 +416,7 @@ const settings = {
         overlay: 'z-40 overflow-auto scrolling-touch left-0 top-0 bottom-0 right-0 w-full h-full fixed bg-opacity-60 focus:outline-none',
         wrapper: 'relative mx-auto z-50 max-w-lg min-h-full px-3 py-12 flex flex-col justify-center',
         modal: 'overflow-visible relative rounded',
-        body: 'py-8 px-4',
+        body: 'py-6 px-4',
         header: 'py-3 px-4 border-b rounded-t',
         footer: 'py-3 px-4 border-t rounded-b',
         close: 'flex items-center justify-center rounded-full absolute right-0 top-0 -m-3 h-8 w-8 transition duration-100 ease-in-out focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50'

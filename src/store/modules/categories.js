@@ -80,7 +80,7 @@ export default {
         throw e
       }
     },
-    async updateItem({ commit }, { id, label, price, cid }) {
+    async editItem({ commit }, { id, label, price, cid }) {
       try {
         await firebase.database().ref(`/categories/${cid}/items`).child(id).update({ label, price })
       } catch (e) {

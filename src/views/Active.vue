@@ -1,8 +1,13 @@
 <template>
   <div>
-    <div class="mb-6 flex items-baseline">
-      <h1>Рабочая смена</h1>
-      <div class="ml-4 text-xs text-gray-400">открыта: <span class="font-semibold">{{ session.name }}</span></div>
+    <h1 class="mb-6">Рабочая смена</h1>
+    <div class="mb-6 text-xs">
+      <p class="mb-1 text-xs">
+        <span class="text-gray-500 dark:text-gray-400">Открыта:</span> <strong class="font-semibold">{{ session.name }}</strong>
+      </p>
+      <p class="mb-1 text-xs">
+        <span class="text-gray-500 dark:text-gray-400">Мероприятие:</span> <strong class="font-semibold">{{ session.event }}</strong>
+      </p>
     </div>
     <app-loader v-if="loading" />
     <div v-else-if="!items">
@@ -42,7 +47,7 @@ export default {
     paginationMixin
   ],
   data: () => ({
-    loading: false,
+    loading: true,
     items: [],
     totalItems: []
   }),
@@ -53,8 +58,7 @@ export default {
   },
   methods: {
     removeOrder(id) {
-      this.items = this.items
-        .filter(el => el.id !== id)
+      this.items = this.items.filter(el => el.id !== id)
       this.totalItems = this.items
     },
     editOrder(id, updates) {
@@ -76,9 +80,8 @@ export default {
     }
   },
   async mounted() {
-    this.loading = true
     this.items = (await this.$store.dispatch('fetchOrders', {
-        id: this.$store.getters.session.id,
+        id: this.session.id,
         isActive: true
       }))
       .reverse()

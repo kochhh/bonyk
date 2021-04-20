@@ -19,7 +19,7 @@
       @before-close="onBeforeClose"
     >
       <form @submit.prevent="submitHandler">
-        <div class="py-8 px-4">
+        <div class="py-6 px-4">
           <div class="flex space-x-2">
             <div class="flex-shrink-0 w-36">
               <input

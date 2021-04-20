@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 class="mb-6">Редактирование</h1>
     <div class="flex items-center mb-4">
       <h2>Выберите категорию</h2>
       <div class="ml-auto flex">
@@ -32,9 +33,6 @@
         <table class="min-w-full shadow-sm border border-gray-200 dark:border-gray-700 mb-8 text-sm">
           <thead>
             <tr>
-              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-12">
-                Вкл?
-              </th>
               <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
                 Название
               </th>
@@ -44,10 +42,13 @@
               <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-24">
                 Действия
               </th>
+              <th class="px-3 py-2 font-semibold text-left bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-12">
+                Вкл?
+              </th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
-            <items-edit-row
+            <item-edit-row
               v-for="item in items"
               :key="item.id"
               :category="category"
@@ -69,7 +70,7 @@
 import CategoriesEdit from '../components/CategoriesEdit'
 import CategoryCreate from '../components/CategoryCreate'
 import ItemCreate from '../components/ItemCreate'
-import ItemsEditRow from '../components/ItemsEditRow'
+import ItemEditRow from '../components/ItemEditRow'
 
 export default {
   name: 'Edit',
@@ -79,7 +80,7 @@ export default {
     }
   },
   components: {
-    CategoriesEdit, CategoryCreate, ItemCreate, ItemsEditRow
+    CategoriesEdit, CategoryCreate, ItemCreate, ItemEditRow
   },
   data: () => ({
     categories: [],
